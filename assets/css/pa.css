@@ -1,0 +1,9 @@
+#encartResultat{
+    border-radius: 0.25em;
+    color: #fff;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+    padding:10px 30px
+}

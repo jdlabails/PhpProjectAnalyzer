@@ -28,6 +28,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
         <script src="assets/js/jquery-2.1.0.min.js" type="text/javascript"></script>
         <script src="assets/js/pa.js" type="text/javascript"></script>
         <link href="assets/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link href="assets/css/pa.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
         <div class="container-fluid">
@@ -40,17 +41,9 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                     </h1>
                 </div>
                 <div class="col-md-4" style="margin-top:23px; font-size:20px">
-                    <div class="label-<?=$_testInfo['ok']?'success':'danger'?>" style="
-  border-radius: 0.25em;
-  color: #fff;
-  font-size: 75%;
-  font-weight: 700;
-  line-height: 1.5;
-  white-space: nowrap;
-  padding:10px 30px
-">
+                    <div class="label-<?=$_testInfo['ok']?'success':'danger'?>" id="encartResultat">
                         Dernière analyse : <?=$_derniereAnalyse['date']?>
-                    <br>
+                        <br>
                         Durée : <?=$_derniereAnalyse['time']?> secondes
                     </div>
                 </div>
@@ -220,9 +213,9 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                             </div>
                         </div>
                         <div class="panel-body" style="line-height: 30px">
-                            <a href="TEST/phpUnitReport/dashboard.html" target="_blanc">Rapport de code coverage</a>
+                            <a href="reports/TEST/phpUnitReport/dashboard.html" target="_blanc">Rapport de code coverage</a>
                             <br>
-                            <a href="DOCS/index.html" target="_blanc">Documentation générée</a>
+                            <a href="reports/DOCS/index.html" target="_blanc">Documentation générée</a>
                             <hr>
                             <a href="<?=$projectAnalyser->getParam('gitlabURL')?>" target="_blank">Accès GitLab</a>
                             <br>
@@ -334,7 +327,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['DEPEND']['report']?></pre>
-                            <!--<img src='DEPEND/jdepend.svg' width="90%">-->
+                            <!--<img src='DEPEND/jdepend.svg' width="90%">
                             <img src='DEPEND/pyramid.svg' width="40%">
 
                             <dl style="display: inline-table;text-align: right;width: 40%;">
@@ -363,6 +356,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                 <dt>NOP</dt>
                                 <dd>Number of packages</dd>
                             </dl>
+                            -->
                         </div>
                     </div>
                 </div>
