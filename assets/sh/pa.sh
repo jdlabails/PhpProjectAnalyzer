@@ -17,7 +17,7 @@ DIR_PA=/home/FIDUCIAL/adm_jd.labails/fos/web/pa
 DIR_REPORT=${DIR_PA}/reports
 DIR_PHAR=${DIR_PA}/assets/_phar
 
-chmod 777 -R ${DIR_REPORT}
+chmod -R 777 ${DIR_REPORT}
 
 touch ${DIR_PA}/jetonAnalyse
 
