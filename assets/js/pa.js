@@ -22,7 +22,8 @@ function lancerAnalyse() {
         },
         method: 'post'
     }).done(function (data) {
-        refreshLanceur();
+        $('#formLanceur').hide();
+        $('#refreshLanceur').show();
     });
 
     return false;

@@ -16,7 +16,7 @@ It executes
 
 And give a view like :
 
-![](https://github.com/jdlabails/PhpProjectAnalyser/ppaIndex.png)
+![](https://raw.githubusercontent.com/jdlabails/PhpProjectAnalyzer/master/ppaIndex.png)
 
 ```
 $ cd your_repo_root/repo_name
