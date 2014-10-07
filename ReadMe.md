@@ -18,15 +18,16 @@ And give a view like :
 
 ![](https://raw.githubusercontent.com/jdlabails/PhpProjectAnalyzer/master/ppaIndex.png)
 
-```
-$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-```
+
 
 
 ### Easy for Symfony2
-Made for that ! Just create a directory 'pa' into your web directory. Put the project analyser in it and call pa/index.php with your nav.
+Made for that ! 
+ - Just create a directory 'pa' into your 'web' directory. 
+ - Paste the project analyser in this pa directory
+ - Edit param.yml to fit your project
+ - call pa/index.php with your nav.
+ - click on 'Lancer l'analyse'
 
 ### Todo
 This project is a pure PHP code et bash scripts.
@@ -35,4 +36,3 @@ It could be refactoring and a bundle for Symfony should be made.
 The following asset are missing
 
 Atoum testing
-Fine configuration
