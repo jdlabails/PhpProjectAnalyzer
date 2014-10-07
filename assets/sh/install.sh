@@ -11,7 +11,8 @@
 
 
 #Parametres generaux
-DIR_PA=/home/FIDUCIAL/adm_jd.labails/fos/web/pa
+DIR_ASSET_SH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR_PA=${DIR_ASSET_SH}/../../
 DIR_PHAR=${DIR_PA}/_phar
 DIR_REPORT=${DIR_PA}/reports
 

@@ -13,13 +13,13 @@ count : true
 # métrique qualité copy-paste
 cpd : true
 
-# métrique qualité code sniffer 
+# métrique qualité code sniffer
 cs :
     enable: true
-    standard: PSR1
+    standard: PSR2
 
 # métrique qualité php depend
-depend : false
+depend : true
 
 # métrique qualité php loc
 loc : true
@@ -29,8 +29,8 @@ md :
     enable: true
     rules:
         codeclean: false
-        codesize: true
-        controversial: true
+        codesize: false
+        controversial: false
         design: true
         naming: true
         unusedcode: true
@@ -40,6 +40,6 @@ docs : true
 
 # tests unitaires et fonctionnels
 test :
-    enable: false
+    enable: true
     lib : phpunit
     testsuite : GesMouv
