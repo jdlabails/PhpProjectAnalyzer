@@ -55,34 +55,43 @@ find ${DIR_SRC}/ -type d -name "*Bundle" | wc -l > ${DIR_REPORT}/COUNT/nbBundle.
 
 echo "Analyse code sniffer"
 rm -f ${DIR_REPORT}/CS/*.txt
+echo "php ${DIR_PHAR}/phpcs.phar --report-file=${DIR_REPORT}/CS/report.txt --extensions=php --standard=PSR2 ${DIR_SRC}" > ${DIR_REPORT}/CS/cmd.txt
 php ${DIR_PHAR}/phpcs.phar --report-file=${DIR_REPORT}/CS/report.txt --extensions=php --standard=PSR2 ${DIR_SRC} > ${DIR_REPORT}/CS/summary.txt 2>&1
 
 echo "Analyse Mess Detector"
-rm -f ${DIR_REPORT}/MD/report.txt
+rm -f ${DIR_REPORT}/MD/*.txt
+echo "${DIR_PHAR}/phpmd.phar ${DIR_SRC} text codesize,controversial,design,naming,unusedcode --reportfile ${DIR_REPORT}/MD/report.txt" > ${DIR_REPORT}/MD/cmd.txt
 php ${DIR_PHAR}/phpmd.phar ${DIR_SRC} text codesize,controversial,design,naming,unusedcode --reportfile ${DIR_REPORT}/MD/report.txt
 
 echo "Calcul de metriques par PhpDepend"
-rm -f ${DIR_REPORT}/DEPEND/report.txt
+rm -f ${DIR_REPORT}/DEPEND/*.txt
+echo "php ${DIR_PHAR}/pdepend.phar --summary-xml=${DIR_REPORT}/DEPEND/summary.xml --jdepend-chart=${DIR_REPORT}/DEPEND/jdepend.svg --overview-pyramid=${DIR_REPORT}/DEPEND/pyramid.svg ${DIR_SRC}"  > ${DIR_REPORT}/DEPEND/cmd.txt
 php ${DIR_PHAR}/pdepend.phar --summary-xml=${DIR_REPORT}/DEPEND/summary.xml --jdepend-chart=${DIR_REPORT}/DEPEND/jdepend.svg --overview-pyramid=${DIR_REPORT}/DEPEND/pyramid.svg ${DIR_SRC} > ${DIR_REPORT}/DEPEND/report.txt 2>&1
 
 echo "Analyse Copy-Paste"
-rm -f ${DIR_REPORT}/CPD/report.txt
+rm -f ${DIR_REPORT}/CPD/*.txt
+echo "php ${DIR_PHAR}/phpcpd.phar ${DIR_SRC}" > ${DIR_REPORT}/CPD/cmd.txt
 php ${DIR_PHAR}/phpcpd.phar ${DIR_SRC} > ${DIR_REPORT}/CPD/report.txt 2>&1
 
 echo "Mesures des sources par PhpLoc"
-rm -f ${DIR_REPORT}/LOC/report.txt
+rm -f ${DIR_REPORT}/LOC/*.txt
+echo "php ${DIR_PHAR}/phploc.phar --log-xml ${DIR_REPORT}/LOC/phploc.xml ${DIR_SRC}" > ${DIR_REPORT}/LOC/cmd.txt
 php ${DIR_PHAR}/phploc.phar --log-xml ${DIR_REPORT}/LOC/phploc.xml ${DIR_SRC} > ${DIR_REPORT}/LOC/report.txt 2>&1
 
 
 if [ ${CODE_COVERAGE} -eq 1 ]
 then
     echo "Lancement des tests unitaires AVEC code-coverage"
-    rm -f ${DIR_REPORT}/TEST/report.txt
+    rm -f ${DIR_REPORT}/TEST/*.txt
+    echo "cd ${DIR_SRC}/../" > ${DIR_REPORT}/TEST/cmd.txt
+    echo "php ${DIR_PHAR}/phpunit.phar -c ${DIR_SRC}/../app/phpunit.xml.dist --testsuite=GesMouv --coverage-text=${DIR_REPORT}/TEST/coverage.txt --coverage-html ${DIR_REPORT}/TEST/phpUnitReport/ ${DIR_SRC}" >> ${DIR_REPORT}/TEST/cmd.txt
     cd ${DIR_SRC}/../
     php ${DIR_PHAR}/phpunit.phar -c ${DIR_SRC}/../app/phpunit.xml.dist --testsuite=GesMouv --coverage-text=${DIR_REPORT}/TEST/coverage.txt --coverage-html ${DIR_REPORT}/TEST/phpUnitReport/ ${DIR_SRC} > ${DIR_REPORT}/TEST/report.txt 2>&1
 else
     echo "Lancement des tests unitaires SANS code-coverage"
-    rm -f ${DIR_REPORT}/TEST/report.txt
+    rm -f ${DIR_REPORT}/TEST/*.txt
+    echo "cd ${DIR_SRC}/../" > ${DIR_REPORT}/TEST/cmd.txt
+    echo "php ${DIR_PHAR}/phpunit.phar -c ${DIR_SRC}/../app/phpunit.xml.dist --testsuite=GesMouv ${DIR_SRC}" >> ${DIR_REPORT}/TEST/cmd.txt
     cd ${DIR_SRC}/../
     php ${DIR_PHAR}/phpunit.phar -c ${DIR_SRC}/../app/phpunit.xml.dist --testsuite=GesMouv ${DIR_SRC} > ${DIR_REPORT}/TEST/report.txt 2>&1
 fi
@@ -91,7 +100,8 @@ fi
 if [ ${DOC} -eq 1 ]
 then
     echo "Rédaction de la documentation"
-    rm -f ${DIR_REPORT}/DOCS/report.txt
+    rm -f ${DIR_REPORT}/DOCS/*.txt
+    echo "php ${DIR_PHAR}/phpDocumentor.phar -d ${DIR_SRC} -t ${DIR_REPORT}/DOCS" > ${DIR_REPORT}/DOCS/cmd.txt
     php ${DIR_PHAR}/phpDocumentor.phar -d ${DIR_SRC} -t ${DIR_REPORT}/DOCS > ${DIR_REPORT}/DOCS/report.txt 2>&1
 fi
 

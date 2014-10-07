@@ -24,6 +24,7 @@ function lancerAnalyse() {
     }).done(function (data) {
         $('#formLanceur').hide();
         $('#refreshLanceur').show();
+        setTimeout(refreshLanceur, 3000);
     });
 
     return false;

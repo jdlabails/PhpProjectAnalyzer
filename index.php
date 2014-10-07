@@ -276,9 +276,8 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                             <small><?=$_testInfo['dateTimeTest']?></small>
                         </div>
                         <div class="panel-body">
-                            <pre class="pre-scrollable">
-                                <?=$_testInfo['report']?>
-                            </pre>
+                            <pre class="pre-scrollable"><?=$_testInfo['report']?></pre>
+                            <code><?=$_testInfo['cmd']?></code>
                         </div>
                     </div>
                 </div>
@@ -291,6 +290,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['MD']['report']?></pre>
+                            <code><?=$_reportInfo['MD']['cmd']?></code>
                         </div>
                     </div>
                 </div>
@@ -303,6 +303,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['CPD']['report']?></pre>
+                            <code><?=$_reportInfo['CPD']['cmd']?></code>
                         </div>
                     </div>
                 </div>
@@ -315,6 +316,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['CS']['report']?></pre>
+                            <code><?=$_reportInfo['CS']['cmd']?></code>
                         </div>
                     </div>
                 </div>
@@ -327,6 +329,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['DEPEND']['report']?></pre>
+                            <code><?=$_reportInfo['DEPEND']['cmd']?></code>
                             <!--<img src='DEPEND/jdepend.svg' width="90%">
                             <img src='DEPEND/pyramid.svg' width="40%">
 
@@ -369,6 +372,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['LOC']['report']?></pre>
+                            <code><?=$_reportInfo['LOC']['cmd']?></code>
                         </div>
                     </div>
                 </div>
@@ -381,6 +385,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                         <div class="panel-body">
                             <pre class="pre-scrollable"><?=$_reportInfo['DOCS']['report']?></pre>
+                            <code><?=$_reportInfo['DOCS']['cmd']?></code>
                         </div>
                     </div>
                 </div>

@@ -284,6 +284,11 @@ class projectAnalyser
             }
         }
 
+        $cmdFile = $this->_reportPath.'/TEST/cmd.txt';
+        if (file_exists($cmdFile)) {
+            $res['cmd']=  file_get_contents($cmdFile);
+        }
+
         return $res;
     }
 
@@ -298,6 +303,12 @@ class projectAnalyser
                 'report'    => $reportTxt,
                 'ok'        => $vide
             );
+
+            $cmdFile = $this->_reportPath.'/'.$report.'/cmd.txt';
+            $res[$report]['cmd']='';
+            if (file_exists($cmdFile)) {
+                $res[$report]['cmd']=  file_get_contents($cmdFile);
+            }
         }
 
         return $res;
