@@ -47,7 +47,7 @@ class scriptManager
 
         // on vérifie qu'on peut executer le sh
         if(!is_executable($this->_paShPath)) {
-            chmod($this->_paShPath, '0777');
+            chmod($this->_paShPath, 0777);
             if(!is_executable($this->_paShPath)) {
                 return 'pa.sh non executable';
             }
