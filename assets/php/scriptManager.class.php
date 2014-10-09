@@ -27,7 +27,7 @@ class scriptManager
 
         $this->_parameters          = Spyc::YAMLLoad($this->_paramPath);
 
-        $this->_mustGenerate   = filemtime($this->_paShPath) < filemtime($this->_paramPath);
+        $this->_mustGenerate        = filemtime($this->_paShPath) < filemtime($this->_paramPath);
     }
 
     function lancerAnalyse()
@@ -60,12 +60,12 @@ class scriptManager
         $cmd = $this->_paShPath;
 
         // on gere les options
-        if (filter_input(INPUT_GET, 'genDoc') == 1) {
+        if (filter_input(INPUT_POST, 'genDoc') == 1) {
             $cmd.=' -d ';
             $txt .= ' avec génération de doc ';
         }
 
-        if (filter_input(INPUT_GET, 'genCC') == 1) {
+        if (filter_input(INPUT_POST, 'genCC') == 1) {
             $cmd.=' -c ';
             $txt .= 'avec code coverage';
         }
@@ -73,7 +73,7 @@ class scriptManager
         // on lance l'analyse, c'est à dire le sh
         exec('nohup '.$cmd. ' > /dev/null  &');
 
-        return $txt.' lancée';
+        return $txt.' lancée ('.$cmd.')';
     }
 
     /**
