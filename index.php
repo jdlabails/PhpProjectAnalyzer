@@ -213,9 +213,9 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                             </div>
                         </div>
                         <div class="panel-body" style="line-height: 30px">
-                            <a href="reports/TEST/phpUnitReport/dashboard.html" target="_blanc">Rapport de code coverage</a>
+                            <a href="reports/TEST/phpUnitReport/dashboard.html" target="_blank">Rapport de code coverage</a>
                             <br>
-                            <a href="reports/DOCS/index.html" target="_blanc">Documentation générée</a>
+                            <a href="reports/DOCS/index.html" target="_blank">Documentation générée</a>
                             <hr>
                             <a href="<?=$projectAnalyser->getParam('gitlabURL')?>" target="_blank">Accès GitLab</a>
                             <br>
