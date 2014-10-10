@@ -32,8 +32,8 @@ md :
         codesize: false
         controversial: false
         design: true
-        naming: true
-        unusedcode: true
+        naming: false
+        unusedcode: false
 
 # possiblité de généré la phpdoc
 docs : true
