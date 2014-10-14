@@ -197,10 +197,14 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                     <?=$projectAnalyser->afficheSummary($_quality_info['CPD']['summary']); ?>
                                     Copy-Paste
                                 </li>
+
+                                <?php if ($projectAnalyser->isEnable('cs', true)) { ?>
                                 <li class="list-group-item">
                                     <?=$projectAnalyser->afficheSummary($_quality_info['CS']['summary']); ?>
-                                    Code Sniffer (PSR2)
+                                    Code Sniffer (<?=$projectAnalyser->getParam('cs', 'standard')?>)
                                 </li>
+                                <?php } ?>
+
                                 <li class="list-group-item">
                                     <?=$projectAnalyser->afficheSummary($_quality_info['MD']['summary']); ?>
                                     Mess Detector
@@ -315,6 +319,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                     </div>
                 </div>
 
+                <?php if ($projectAnalyser->isEnable('cs', true)) { ?>
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-<?=$_reportInfo['CS']['ok']?'success':'warning'?>">
                         <div class="panel-heading">
@@ -327,6 +332,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                <?php } ?>
 
                 <div class="col-xs-12">
                     <div class="panel panel-primary">
@@ -371,6 +377,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                     </div>
                 </div>
 
+                <?php if ($projectAnalyser->isEnable('loc')) { ?>
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -383,6 +390,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                <?php } ?>
 
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-primary">

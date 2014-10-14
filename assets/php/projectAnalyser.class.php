@@ -21,9 +21,13 @@ class projectAnalyser
      * @param string $name cle du param
      * @return string value du param
      */
-    function getParam($name)
+    function getParam($name, $attr = '')
     {
         if (isset($this->_parameters[$name])) {
+            if ($attr != '' && isset($this->_parameters[$name][$attr])) {
+                return $this->_parameters[$name][$attr];
+            }
+            
             return $this->_parameters[$name];
         }
 
@@ -35,8 +39,11 @@ class projectAnalyser
      * @param type $paramName
      * @return boolean
      */
-    function isEnable($paramName)
+    function isEnable($paramName, $explicit = false)
     {
+        if ($explicit) {
+            return $this->getParam($paramName, 'enable') === true;
+        }
         return $this->getParam($paramName) === true;
     }
 
