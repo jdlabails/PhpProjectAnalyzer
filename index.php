@@ -59,7 +59,10 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                             </div>
                         </div>
                         <div class="panel-body">
+
+
                             <ul class="list-group">
+                                <?php if ($projectAnalyser->isEnable('count')) { ?>
                                 <li class="list-group-item">
                                     <span class="badge alert-info"><?=$_count['nbBundle']?></span>
                                     Bundles
@@ -98,30 +101,34 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                         </li>
                                     </ul>
                                 </li>
+                                <?php } ?>
+
+                                <?php if ($projectAnalyser->isEnable('loc')) { ?>
                                 <li class="list-group-item">
                                     <span class="badge alert-info">
-                                        <?=$projectAnalyser->extractFromXmlReport('namespaces', '/LOC/phploc.xml')?>
+                                        <?=$projectAnalyser->extractFromLoc('namespaces')?>
                                     </span>
                                     Namespaces
                                 </li>
                                 <li class="list-group-item">
                                     <span class="badge alert-info">
-                                        <?=$projectAnalyser->extractFromXmlReport('classes', '/LOC/phploc.xml')?>
+                                        <?=$projectAnalyser->extractFromLoc('classes')?>
                                     </span>
                                     Classes
                                 </li>
                                 <li class="list-group-item">
                                     <span class="badge alert-info">
-                                        <?=$projectAnalyser->extractFromXmlReport('methods', '/LOC/phploc.xml')?>
+                                        <?=$projectAnalyser->extractFromLoc('methods')?>
                                     </span>
                                     Méthodes
                                 </li>
                                 <li class="list-group-item">
                                     <span class="badge alert-info">
-                                        <?=$projectAnalyser->extractFromXmlReport('loc', '/LOC/phploc.xml');?>
+                                        <?=$projectAnalyser->extractFromLoc('loc');?>
                                     </span>
                                     Lignes de code
                                 </li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>

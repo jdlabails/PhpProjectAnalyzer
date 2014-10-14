@@ -31,6 +31,21 @@ class projectAnalyser
     }
 
     /**
+     * Renvoi vrai si la param est à true dans le yml
+     * @param type $paramName
+     * @return boolean
+     */
+    function isEnable($paramName)
+    {
+        return $this->getParam($paramName) === true;
+    }
+
+    function extractFromLoc($param)
+    {
+        return $this->extractFromXmlReport($param, '/LOC/phploc.xml');
+    }
+
+    /**
      * Recupere le contenu du rapport
      * @param string $file chemin du fichier
      * @return array($txt, $vide) contenu du rapport et boolean si vide ou pas
