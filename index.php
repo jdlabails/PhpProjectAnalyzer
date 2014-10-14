@@ -8,7 +8,7 @@ require_once "assets/php/Spyc.php";
 
 $analyseEnCours = file_exists(__DIR__.'/jetonAnalyse');
 
-$_parameters        = Spyc::YAMLLoad('param.yml');
+$_parameters        = Spyc::YAMLLoad('assets/param.yml');
 $projectAnalyser    = new projectAnalyser($_parameters);
 $_count             = $projectAnalyser->getCount();
 $_derniereAnalyse   = $projectAnalyser->getAnalyseInfo();

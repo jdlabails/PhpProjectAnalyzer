@@ -28,12 +28,12 @@ loc : true
 md :
     enable: true
     rules:
-        codeclean: false
-        codesize: false
-        controversial: false
+        cleancode: true
+        codesize: true
+        controversial: true
         design: true
         naming: false
-        unusedcode: false
+        unusedcode: true
 
 # possiblité de généré la phpdoc
 docs : true
