@@ -41,7 +41,8 @@ Atoum testing
 
 ### Road Map
 
-Fit view to param
-Better code structuration
-DataBase following of the project
-Atoum support
+ - Fit view to param
+ - English version
+ - Better code structuration
+ - DataBase following of the project
+ - Atoum support
