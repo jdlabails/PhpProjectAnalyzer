@@ -27,7 +27,7 @@ class projectAnalyser
             if ($attr != '' && isset($this->_parameters[$name][$attr])) {
                 return $this->_parameters[$name][$attr];
             }
-            
+
             return $this->_parameters[$name];
         }
 
@@ -238,7 +238,7 @@ class projectAnalyser
             'ok'            => false,
             'nbTest'        => '/',
             'nbAssertions'  => '/',
-            'dateTimeTest'  => '/',
+            'date'  => '/',
             'exeTime'       => '/',
             'exeMem'        => '/',
             'dateTimeCC'    => '/',
@@ -253,7 +253,7 @@ class projectAnalyser
         $testReportFile = $this->_reportPath.'/TEST/report.txt';
         if (file_exists($testReportFile)) {
             $res['report'] = $this->adaptPhpUnitReport($testReportFile);
-            $res['dateTimeTest']=date('d/m/y à H:i', filemtime($testReportFile));
+            $res['date']=date('d/m/y à H:i', filemtime($testReportFile));
 
             $lines = file($testReportFile);
             foreach ($lines as $l) {
