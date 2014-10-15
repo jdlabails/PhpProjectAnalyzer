@@ -145,6 +145,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         <div class="panel-body">
                             <ul class="list-group">
 
+                                <?php if ($projectAnalyser->isEnable('test', true)) { ?>
                                 <li class="list-group-item">
                                     <?php if ($_testInfo['ok'] === false) { ?>
                                         <span class="badge alert-danger">KO !!!</span>
@@ -183,7 +184,13 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                         </li>
                                     </ul>
                                 </li>
+                                <?php } ?>
 
+                                <?php if ($projectAnalyser->isEnable('md', true)) { ?>
+                                <li class="list-group-item">
+                                    <?=$projectAnalyser->afficheSummary($_quality_info['MD']['summary']); ?>
+                                    Mess Detector
+                                </li>
                                 <li class="list-group-item">
                                     <span class="badge alert-warning"><?=$_quality_info['cc10']?></span>
                                     Nb méthode avec CC* > 10
@@ -192,11 +199,16 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                     <span class="badge alert-success">
                                         <?=number_format((float)$projectAnalyser->extractFromXmlReport('ccnByNom', '/LOC/phploc.xml'), 2, ',', ' ')?>
                                     </span>
-                                    CC* / Nb Méthodes</li>
+                                    CC* / Nb Méthodes
+                                </li>
+                                <?php } ?>
+
+                                <?php if ($projectAnalyser->isEnable('cpd')) { ?>
                                 <li class="list-group-item">
                                     <?=$projectAnalyser->afficheSummary($_quality_info['CPD']['summary']); ?>
                                     Copy-Paste
                                 </li>
+                                <?php } ?>
 
                                 <?php if ($projectAnalyser->isEnable('cs', true)) { ?>
                                 <li class="list-group-item">
@@ -204,11 +216,6 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                     Code Sniffer (<?=$projectAnalyser->getParam('cs', 'standard')?>)
                                 </li>
                                 <?php } ?>
-
-                                <li class="list-group-item">
-                                    <?=$projectAnalyser->afficheSummary($_quality_info['MD']['summary']); ?>
-                                    Mess Detector
-                                </li>
                             </ul>
                             *CC : Complexité Cyclomatique
                         </div>
@@ -226,7 +233,9 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         <div class="panel-body" style="line-height: 30px">
                             <a href="reports/TEST/phpUnitReport/dashboard.html" target="_blank">Rapport de code coverage</a>
                             <br>
+                            <?php if ($projectAnalyser->isEnable('docs')) { ?>
                             <a href="reports/DOCS/index.html" target="_blank">Documentation générée</a>
+                            <?php } ?>
                             <hr>
                             <a href="<?=$projectAnalyser->getParam('gitlabURL')?>" target="_blank">Accès GitLab</a>
                             <br>
@@ -238,11 +247,14 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         <div class="panel-body">
                             <div id="formLanceur" style="display: <?=$analyseEnCours?'none':'block'?>" >
                                 <form action="index.php" onsubmit="return lancerAnalyse();">
+                                    <?php if ($projectAnalyser->isEnable('docs')) { ?>
                                     <div class="checkbox">
                                         <label>
                                           <input type="checkbox" name="genDoc" id="genDoc" value="1"> Générer la doc
                                         </label>
                                     </div>
+                                    <?php } ?>
+
                                     <div class="checkbox">
                                         <label>
                                           <input type="checkbox" name="genCC" id="genCC" value="1"> Générer le code coverage
@@ -257,9 +269,6 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                                     Analyse en cours. Veuillez patienter...
                                 </div>
                                 <img src="assets/img/loading.gif" style="width:100px;float: right;margin:10px 24px" >
-                                <!--
-                                <button onclick="refreshLanceur()" class="btn btn-primary">Rafraichir le statut</button>
-                                -->
                             </div>
                             <div id="rechargePage" style="text-align:center;display: none">
                                 Analyse terminée, rafraichissez la page.
@@ -271,7 +280,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
 
                     <div class="well well-sm"
                          onclick="$('#detail').toggle()"
-                         style="background-color: white">
+                         style="background-color: darksalmon">
                         <h3 class="text-center">Voir les détails</h3>
                     </div>
 
@@ -280,6 +289,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
 
             <div class="row" id="detail" style="display: none">
 
+                <?php if ($projectAnalyser->isEnable('test', true)) { ?>
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-<?=$_testInfo['ok']?'success':'danger'?>">
                         <div class="panel-heading">
@@ -292,7 +302,9 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                 <?php } ?>
 
+                <?php if ($projectAnalyser->isEnable('md', true)) { ?>
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-<?=$_reportInfo['MD']['ok']?'success':'warning'?>">
                         <div class="panel-heading">
@@ -305,7 +317,9 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                 <?php } ?>
 
+                <?php if ($projectAnalyser->isEnable('cpd')) { ?>
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-<?=$_reportInfo['CPD']['ok']?'success':'warning'?>">
                         <div class="panel-heading">
@@ -318,6 +332,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                 <?php } ?>
 
                 <?php if ($projectAnalyser->isEnable('cs', true)) { ?>
                 <div class="col-xs-12 col-md-6">
@@ -334,6 +349,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                 </div>
                 <?php } ?>
 
+                <?php if ($projectAnalyser->isEnable('depend', true)) { ?>
                 <div class="col-xs-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -376,6 +392,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                <?php } ?>
 
                 <?php if ($projectAnalyser->isEnable('loc')) { ?>
                 <div class="col-xs-12 col-md-6">
@@ -392,6 +409,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                 </div>
                 <?php } ?>
 
+                <?php if ($projectAnalyser->isEnable('docs')) { ?>
                 <div class="col-xs-12 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -404,6 +422,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </body>
