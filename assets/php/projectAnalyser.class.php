@@ -326,6 +326,10 @@ class projectAnalyser
                 'ok'        => $vide
             );
 
+            if ($report == 'CPD') {
+                $res[$report]['ok'] = strpos($reportTxt, '0.00% duplicated lines') !== false;
+            }
+
             $cmdFile = $this->_reportPath.'/'.$report.'/cmd.txt';
             $res[$report]['cmd']='';
             if (file_exists($cmdFile)) {
