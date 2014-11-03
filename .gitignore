@@ -1,3 +1,6 @@
 reports/*
 assets/param.yml
 /assets/sh/pa.sh
+jetonAnalyse
+jetons/*
+output.log
