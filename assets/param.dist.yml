@@ -1,11 +1,11 @@
-title: Ges'Mouv
-description: Application web sur mobile pour commerciaux FOS
+title: Title of your project
+description: It's a ouaaaouhh project !
 
 gitlabURL: http://lxlyocvs12:9292/fos-mobilite-web/
 
 # chemin d'analyse
-srcPath : /home/FIDUCIAL/adm_jd.labails/fos/src
-paPath : /home/FIDUCIAL/adm_jd.labails/fos/web/pa
+srcPath : /path/to/your/src
+paPath : /path/to/your/PhpProjectAnalyser
 
 # métrique quantitative
 count : true
