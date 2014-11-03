@@ -30,3 +30,5 @@ mkdir ${DIR_REPORT}/TEST
 # on leur met des droits extraordinairs car apache et notre utilisateur doivent pouvoir y accèder
 chmod -R 777 ${DIR_REPORT}
 
+
+chmod -R 777 ${DIR_ASSET_SH}
