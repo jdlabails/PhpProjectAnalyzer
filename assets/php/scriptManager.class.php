@@ -27,7 +27,7 @@ class scriptManager
 
         $this->_parameters          = Spyc::YAMLLoad($this->_paramPath);
 
-        $this->_mustGenerate        = filemtime($this->_paShPath) < filemtime($this->_paramPath);
+        $this->_mustGenerate        = !file_exists($this->_paShPath) || filemtime($this->_paShPath) < filemtime($this->_paramPath);
     }
 
     function lancerAnalyse()
@@ -105,7 +105,7 @@ class scriptManager
                 $std = $this->_parameters['cs']['standard'];
             }
 
-            $contentSh .= str_replace('%%%standard%%%', $std, $csContent);
+            $contentSh .= str_replace('%%%standard%%%ass    ', $std, $csContent);
         }
 
         if ($this->_parameters['depend'] == 'true'){
