@@ -71,7 +71,7 @@ class scriptManager
         }
 
         // on lance l'analyse, c'est à dire le sh
-        exec('nohup '.$cmd. ' > output.log  &');
+        exec('nohup '.$cmd. ' > output.log 2> error.log &');
 
         return $txt.' lancée ('.$cmd.')';
     }

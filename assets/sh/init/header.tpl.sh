@@ -19,7 +19,7 @@ DIR_REPORT=${DIR_PA}/reports
 DIR_PHAR=${DIR_PA}/assets/_phar
 DIR_JETON=${DIR_PA}/jetons
 
-chmod -R 777 ${DIR_REPORT}
+#chmod -R 777 ${DIR_REPORT}
 
 touch ${DIR_JETON}/jetonAnalyse
 
