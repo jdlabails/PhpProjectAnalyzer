@@ -1,7 +1,7 @@
 title: Title of your project
 description: It's a ouaaaouhh project !
 
-gitlabURL: http://lxlyocvs12:9292/fos-mobilite-web/
+gitlabURL: www.urlgitlab.com
 
 # chemin d'analyse
 srcPath : /path/to/your/src
@@ -42,4 +42,4 @@ docs : true
 test :
     enable: true
     lib : phpunit
-    testsuite : GesMouv
+    testsuite : testSuite

@@ -342,7 +342,7 @@ class projectAnalyser
 
     function getAnalyseInfo()
     {
-        $file = __DIR__.'/../../timeAnalyse';
+        $file = __DIR__.'/../../jetons/timeAnalyse';
         $res = array('date'=>'/', 'time'=>'/', 'mem'=>'/');
         if (file_exists($file)) {
             $res ['date']=date('d/m/y à H:i', filemtime($file));

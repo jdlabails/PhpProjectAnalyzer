@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 require_once "assets/php/projectAnalyser.class.php";
 require_once "assets/php/Spyc.php";
 
-$analyseEnCours = file_exists(__DIR__.'/jetonAnalyse');
+$analyseEnCours = file_exists(__DIR__.'/jetons/jetonAnalyse');
 
 $_parameters        = Spyc::YAMLLoad('assets/param.yml');
 $projectAnalyser    = new projectAnalyser($_parameters);

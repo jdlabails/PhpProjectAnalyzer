@@ -15,6 +15,7 @@ DIR_ASSET_SH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DIR_PA=${DIR_ASSET_SH}/../../
 DIR_PHAR=${DIR_PA}/_phar
 DIR_REPORT=${DIR_PA}/reports
+DIR_JETON=${DIR_PA}/jetons
 
 # on cree les rep de report
 mkdir ${DIR_REPORT}
@@ -31,4 +32,8 @@ mkdir ${DIR_REPORT}/TEST
 chmod -R 777 ${DIR_REPORT}
 
 
-chmod -R 777 ${DIR_ASSET_SH}
+# on cree les rep de jetons
+mkdir ${DIR_JETON}
+
+# on leur met des droits extraordinairs car apache et notre utilisateur doivent pouvoir y accèder
+chmod -R 777 ${DIR_JETON}

@@ -1,9 +1,9 @@
 
-rm -f ${DIR_PA}/jetonAnalyse
+rm -f ${DIR_PA}/jetons/jetonAnalyse
 
 END=`date +%s`
 
-echo $((END-START)) > ${DIR_PA}/timeAnalyse
+echo $((END-START)) > ${DIR_JETON}/timeAnalyse
 
 
 exit 0;

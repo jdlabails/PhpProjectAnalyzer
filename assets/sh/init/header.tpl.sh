@@ -17,10 +17,11 @@ DIR_SRC=%%%dir_src%%%  #Repertoire des sources à analyser
 DIR_PA=%%%dir_pa%%%
 DIR_REPORT=${DIR_PA}/reports
 DIR_PHAR=${DIR_PA}/assets/_phar
+DIR_JETON=${DIR_PA}/jetons
 
 chmod -R 777 ${DIR_REPORT}
 
-touch ${DIR_PA}/jetonAnalyse
+touch ${DIR_JETON}/jetonAnalyse
 
 START=`date +%s`
 

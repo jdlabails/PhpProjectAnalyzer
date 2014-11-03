@@ -21,7 +21,7 @@ class scriptManager
     {
         $this->_dirRoot             = __DIR__.'/../../';
         $this->_paramPath           = $this->_dirRoot.'assets/param.yml';
-        $this->_jetonAnalysePath    = $this->_dirRoot.'jetonAnalyse';
+        $this->_jetonAnalysePath    = $this->_dirRoot.'/jetons/jetonAnalyse';
         $this->_paShPath            = $this->_dirRoot.'assets/sh/pa.sh';
         $this->_tplShDirPath        = $this->_dirRoot.'assets/sh/init';
 
@@ -105,7 +105,7 @@ class scriptManager
                 $std = $this->_parameters['cs']['standard'];
             }
 
-            $contentSh .= str_replace('%%%standard%%%ass    ', $std, $csContent);
+            $contentSh .= str_replace('%%%standard%%%', $std, $csContent);
         }
 
         if ($this->_parameters['depend'] == 'true'){
