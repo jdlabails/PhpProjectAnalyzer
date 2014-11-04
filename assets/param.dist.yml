@@ -28,7 +28,7 @@ loc : true
 md :
     enable: true
     rules:
-        cleancode: false
+        codeclean: false
         codesize: true
         controversial: true
         design: true

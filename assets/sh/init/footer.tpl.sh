@@ -7,4 +7,3 @@ echo $((END-START)) > ${DIR_JETON}/timeAnalyse
 
 
 exit 0;
-

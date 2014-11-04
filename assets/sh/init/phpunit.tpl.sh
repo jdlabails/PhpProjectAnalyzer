@@ -15,4 +15,3 @@ else
     cd ${DIR_SRC}/../
     php ${DIR_PHAR}/phpunit.phar -c ${DIR_SRC}/../app/phpunit.xml.dist --testsuite=%%%testsuite%%% ${DIR_SRC} > ${DIR_REPORT}/TEST/report.txt 2>&1
 fi
-
