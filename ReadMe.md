@@ -21,11 +21,10 @@ And give a view like :
 
 
 
-### Easy for Symfony2
-Made for that ! 
- - Just create a directory 'pa' into your 'web' directory. 
- - Paste the project analyser in this pa directory
- - Launch assets/sh/install.sh (possible right problems)
+### Easy for Symfony2  - Made for that !
+ - Go to your web directory
+ - Launch git clone https://github.com/jdlabails/PhpProjectAnalyzer.git
+ - As root, launch web/PhpProjectAnalyzer/assets/sh/install.sh
  - Move assets/param.dist.yml to assets/param.yml
  - Edit assets/param.yml to fit your project
  - Call pa/index.php with your nav.
@@ -41,7 +40,6 @@ Atoum testing
 
 ### Road Map
 
- - Fit view to param
  - English version
  - Better code structuration
  - DataBase following of the project
