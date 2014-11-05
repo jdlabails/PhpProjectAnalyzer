@@ -27,7 +27,7 @@ And give a view like :
  - As root, launch web/PhpProjectAnalyzer/assets/sh/install.sh
  - Move assets/param.dist.yml to assets/param.yml
  - Edit assets/param.yml to fit your project
- - Call pa/index.php with your nav.
+ - Call yoursymfonyproject/PhpProjectAnalyzer/index.php with your nav.
  - Click on 'Lancer l'analyse'
 
 ### Todo
