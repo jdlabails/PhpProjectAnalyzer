@@ -14,7 +14,7 @@
             </tr>
             <tr>
                 <td><?=$projectAnalyser->getLabel('duration')?></td>
-                <td><?=$_derniereAnalyse['time'].' '.$projectAnalyser->getLabel('seconds')?></td>
+                <td><?=$_derniereAnalyse['time']?></td>
             </tr>
             <?php if ($projectAnalyser->isScoreEnable()) { ?>
             <tr>

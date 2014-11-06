@@ -366,7 +366,14 @@ class projectAnalyser
         $res = array('date'=>'/', 'time'=>'/', 'mem'=>'/');
         if (file_exists($file)) {
             $res ['date']=$this->getReadableDateTime(filemtime($file));
-            $res['time']=  file_get_contents($file);
+            $res['time']= file_get_contents($file);
+
+            if ($res['time'] > 120) {
+                $res['time'] = round($res['time'] / 60, 0, PHP_ROUND_HALF_DOWN) . ' min '. ($res['time']%60).' sec ';
+            } else {
+                $res['time'].= ' sec';
+            }
+
         }
 
         return $res;
