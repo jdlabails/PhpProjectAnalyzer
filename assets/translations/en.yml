@@ -4,6 +4,7 @@ lastAnalyze: Last analysis
 duration: Duration
 seconds: seconds
 note: Score
+a: at
 
 # quantite
 quantity.quantity: Quantity

@@ -148,7 +148,7 @@ class projectAnalyser
     function getDateGeneration($file)
     {
         if (file_exists($file)) {
-            return 'Généré le '.date('d/m/y à H:i', filemtime($file));
+            return 'Généré le '.$this->getReadableDateTime(filemtime($file));
         } else {
             return 'Non généré';
         }
@@ -273,7 +273,7 @@ class projectAnalyser
         $testReportFile = $this->_reportPath.'/TEST/report.txt';
         if (file_exists($testReportFile)) {
             $res['report'] = $this->adaptPhpUnitReport($testReportFile);
-            $res['date']=date('d/m/y à H:i', filemtime($testReportFile));
+            $res['date']=$this->getReadableDateTime(filemtime($testReportFile));
 
             $lines = file($testReportFile);
             foreach ($lines as $l) {
@@ -311,7 +311,7 @@ class projectAnalyser
 
         $covReportFile = $this->_reportPath.'/TEST/coverage.txt';
         if (file_exists($covReportFile)) {
-            $res['dateTimeCC']=date('d/m/y à H:i', filemtime($covReportFile));
+            $res['dateTimeCC']=$this->getReadableDateTime(filemtime($covReportFile));
 
             $lines = file($covReportFile);
             foreach ($lines as $k=>$v) {
@@ -365,7 +365,7 @@ class projectAnalyser
         $file = $this->_dirRoot.'jetons/timeAnalyse';
         $res = array('date'=>'/', 'time'=>'/', 'mem'=>'/');
         if (file_exists($file)) {
-            $res ['date']=date('d/m/y à H:i', filemtime($file));
+            $res ['date']=$this->getReadableDateTime(filemtime($file));
             $res['time']=  file_get_contents($file);
         }
 
@@ -389,5 +389,14 @@ class projectAnalyser
         $note = $cs*100 + $test*$cc + $loc/1000;
 
         return round(($note/15), 2);
+    }
+
+    function getReadableDateTime($dt)
+    {
+        if ($this->_parameters['lang'] == 'fr') {
+            return date('d/m/y à H:i', $dt);
+        } else {
+            return date('Y-m-d H:i', $dt);
+        }
     }
 }
