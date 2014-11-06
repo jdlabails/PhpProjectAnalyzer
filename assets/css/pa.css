@@ -7,3 +7,13 @@
     white-space: nowrap;
     padding:10px 30px
 }
+
+#encartResultat table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+#encartResultat table td{
+    padding: 2px;
+}

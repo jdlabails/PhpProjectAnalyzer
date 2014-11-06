@@ -12,6 +12,7 @@ $_derniereAnalyse   = $projectAnalyser->getAnalyseInfo();
 $_quality_info      = $projectAnalyser->getQualityInfo();
 $_testInfo          = $projectAnalyser->exploitTestReport();
 $_reportInfo        = $projectAnalyser->getReportInfo();
+$_note              = $projectAnalyser->getNote($_quality_info, $_testInfo);
 
 ?>
 
@@ -30,7 +31,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
     <body>
         <div class="container-fluid">
             <div class="row"><?php include('tpl/header.tpl.php'); ?></div>
-
+            <br>
             <div class="row">
                 <div class="col-md-4"><?php include('tpl/quantite.tpl.php'); ?></div>
 

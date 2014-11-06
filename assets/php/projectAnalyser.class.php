@@ -371,4 +371,23 @@ class projectAnalyser
 
         return $res;
     }
+
+    /**
+     * 20/20 serait donné à un projet de 100kLoc tester à 100% avec CS ok
+     * @param type $q_info
+     * @param type $t_info
+     * @todo les pondérations pourraient être en param.yml
+     * @return type
+     */
+    function getNote($q_info, $t_info)
+    {
+        $loc = $this->extractFromLoc('loc');
+        $cs = (int)$q_info['CS']['summary'] == 'ok';
+        $test = (int)$t_info['ok'];
+        $cc = (int)str_replace('%', '', $t_info['ccLine']);
+
+        $note = $cs*100 + $test*$cc + $loc/1000;
+
+        return round(($note/15), 2);
+    }
 }
