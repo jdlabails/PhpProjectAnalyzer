@@ -1,16 +1,16 @@
 ### What is it ?
-These script are simple automating script to analyse a php project and give
+These script are simple automating scripts to analyse a php project and give you
 a constructed view of the results.
 
 
 It executes
- - PHPMD
- - PHPUnit
- - PHPCS
- - Copy paste detector
+ - Php Mess Detector
+ - Php Unit Test
+ - Php Code Sniffer
+ - Copy-paste detector
  - Php Depend
- - Php loc
- - PhpDoc
+ - Php Loc
+ - Php Doc
 
 And give a view like :
 
@@ -27,6 +27,15 @@ And give a view like :
  - Edit assets/param.yml to fit your project
  - Call yoursymfonyproject/PhpProjectAnalyzer/index.php with your nav.
  - Click on 'Start Scan'
+
+
+### Features
+ - Aggregate php analysis metrics
+ - Execute quick scan of your project
+ - English or French interfaces
+ - Links with code coverage report
+ - Scoring based on quantity and quality metrics
+
 
 ### Road Map
 
