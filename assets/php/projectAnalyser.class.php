@@ -79,7 +79,7 @@ class projectAnalyser
      */
     function getReport($file)
     {
-        $txt = 'Aucun report généré :(';
+        $txt = $this->getLabel('details.noReport').' :(';
         $vide = false;
         if (file_exists($file)) {
 
@@ -87,7 +87,7 @@ class projectAnalyser
 
             if (trim($txt) == '') {
                 $vide = true;
-                $txt = 'Rapport vide :D';
+                $txt = $this->getLabel('details.emptyReport').' :D';
             } else {
                 $txt .= '<br>';
             }
@@ -148,9 +148,9 @@ class projectAnalyser
     function getDateGeneration($file)
     {
         if (file_exists($file)) {
-            return 'Généré le '.$this->getReadableDateTime(filemtime($file));
+            return $this->getLabel('details.generatedOn').' '.$this->getReadableDateTime(filemtime($file));
         } else {
-            return 'Non généré';
+            return $this->getLabel('details.notGenerated');
         }
     }
 

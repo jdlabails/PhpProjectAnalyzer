@@ -55,5 +55,7 @@ launcher.refresh: Rafraîchir la page
 
 # details
 details.see: Voir les détails
-
-
+details.generatedOn: Généré le
+details.notGenerated: Non généré
+details.emptyReport: Rapport vide
+details.noReport: Aucun report généré
