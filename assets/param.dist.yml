@@ -30,7 +30,7 @@ loc : true
 md :
     enable: true
     rules:
-        codeclean: false
+        cleancode: false
         codesize: true
         controversial: true
         design: true

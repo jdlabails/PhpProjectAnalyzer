@@ -142,7 +142,7 @@ class scriptManager
 
     private function  getMDRuleSet()
     {
-        $availableRule = array('codeclean', 'codesize', 'controversial', 'design', 'naming', 'unusedcode');
+        $availableRule = array('cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode');
         $tabRule=[];
 
         foreach ($availableRule as $r) {
