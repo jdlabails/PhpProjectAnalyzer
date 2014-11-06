@@ -1,35 +1,43 @@
 <div class="panel panel-primary">
-    <div class="panel-heading"><h3>Lanceur</h3></div>
+    <div class="panel-heading">
+        <h3><?=$projectAnalyser->getLabel('launcher.launcher')?></h3>
+    </div>
     <div class="panel-body">
-        <div id="formLanceur" style="display: <?=$analyseEnCours?'none':'block'?>" >
+        <div id="formLanceur" style="display: <?=$projectAnalyser->isAnalyzeInProgress()?'none':'block'?>" >
             <form action="index.php" onsubmit="return lancerAnalyse();">
                 <?php if ($projectAnalyser->isEnable('docs')) { ?>
                 <div class="checkbox">
                     <label>
-                      <input type="checkbox" name="genDoc" id="genDoc" value="1"> Générer la doc
+                      <input type="checkbox" name="genDoc" id="genDoc" value="1">
+                      <?=$projectAnalyser->getLabel('launcher.generateDoc')?>
                     </label>
                 </div>
                 <?php } ?>
 
                 <div class="checkbox">
                     <label>
-                      <input type="checkbox" name="genCC" id="genCC" value="1"> Générer le code coverage
+                      <input type="checkbox" name="genCC" id="genCC" value="1">
+                      <?=$projectAnalyser->getLabel('launcher.generateCoverage')?>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Lancer l'analyse</button>
+                <button type="submit" class="btn btn-primary">
+                    <?=$projectAnalyser->getLabel('launcher.launch')?>
+                </button>
                 <div id="resAnalyse" style="float: right"></div>
             </form>
         </div>
-        <div id="refreshLanceur" style="text-align:center;display: <?=$analyseEnCours?'block':'none'?>">
+        <div id="refreshLanceur" style="text-align:center;display: <?=$projectAnalyser->isAnalyzeInProgress()?'block':'none'?>">
             <div style="float:left;margin: 10% 0;width: 155px;">
-                Analyse en cours. Veuillez patienter...
+                <?=$projectAnalyser->getLabel('launcher.analyzeInProgress')?>
             </div>
             <img src="assets/img/loading.gif" style="width:100px;float: right;margin:10px 24px" >
         </div>
         <div id="rechargePage" style="text-align:center;display: none">
-            Analyse terminée, rafraichissez la page.
+            <?=$projectAnalyser->getLabel('launcher.analyzeFinished')?>
             <br><br>
-            <button onclick="javascript:location.reload();" class="btn btn-success">Rafraichir la page</button>
+            <button onclick="javascript:location.reload();" class="btn btn-success">
+                <?=$projectAnalyser->getLabel('launcher.refresh')?>
+            </button>
         </div>
     </div>
 </div>

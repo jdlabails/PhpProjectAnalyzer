@@ -6,10 +6,7 @@ ini_set('display_errors', 1);
 require_once "assets/php/projectAnalyser.class.php";
 require_once "assets/php/Spyc.php";
 
-$analyseEnCours = file_exists(__DIR__.'/jetons/jetonAnalyse');
-
-$_parameters        = Spyc::YAMLLoad('assets/param.yml');
-$projectAnalyser    = new projectAnalyser($_parameters);
+$projectAnalyser    = new projectAnalyser();
 $_count             = $projectAnalyser->getCount();
 $_derniereAnalyse   = $projectAnalyser->getAnalyseInfo();
 $_quality_info      = $projectAnalyser->getQualityInfo();
@@ -21,7 +18,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Project Analyser</title>
+        <title>Php Project Analyser</title>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +49,7 @@ $_reportInfo        = $projectAnalyser->getReportInfo();
         </div>
     </body>
 
-    <?php if($analyseEnCours) { ?>
+    <?php if($projectAnalyser->isAnalyzeInProgress()) { ?>
         <script>
         $('document').ready(function () {
             refreshLanceur();

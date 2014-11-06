@@ -1,8 +1,8 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>Quantité</h3>
+        <h3><?=$projectAnalyser->getLabel('quantity.quantity')?></h3>
         <div style=" font-size: 75%;color: #777;">
-            Contenu du dossier src uniquement
+            <?=$projectAnalyser->getLabel('quantity.srcContent')?>
         </div>
     </div>
     <div class="panel-body">
@@ -10,39 +10,39 @@
             <?php if ($projectAnalyser->isEnable('count')) { ?>
             <li class="list-group-item">
                 <span class="badge alert-info"><?=$_count['nbBundle']?></span>
-                Bundles
+                <?=$projectAnalyser->getLabel('quantity.bundles')?>
             </li>
             <li class="list-group-item">
                 <span class="badge alert-info"><?=$_count['nbDossier']?></span>
-                Dossiers
+                <?=$projectAnalyser->getLabel('quantity.directories')?>
             </li>
             <li class="list-group-item">
                 <span class="badge alert-info"><?=$_count['nbFichier']?></span>
-                Fichiers
+                <?=$projectAnalyser->getLabel('quantity.files')?>
                 <ul>
                     <li class="list-group-item">
                         <span class="badge"><?=$_count['nbPHP']?></span>
-                        PHP
+                        <?=$projectAnalyser->getLabel('quantity.PHP')?>
                     </li>
                     <li class="list-group-item">
                         <span class="badge"><?=$_count['nbCSS']?></span>
-                        CSS (hors lib)
+                        <?=$projectAnalyser->getLabel('quantity.CSS')?>
                     </li>
                     <li class="list-group-item">
                         <span class="badge alert-warning"><?=$_count['nbLibCSS']?></span>
-                        Lib CSS
+                        <?=$projectAnalyser->getLabel('quantity.libCSS')?>
                     </li>
                     <li class="list-group-item">
                         <span class="badge"><?=$_count['nbJS']?></span>
-                        JS (hors lib)
+                        <?=$projectAnalyser->getLabel('quantity.JS')?>
                     </li>
                     <li class="list-group-item">
                         <span class="badge alert-warning"><?=$_count['nbLibJS']?></span>
-                        Lib JS
+                        <?=$projectAnalyser->getLabel('quantity.libJS')?>
                     </li>
                     <li class="list-group-item">
                         <span class="badge"><?=$_count['nbTwig']?></span>
-                        TWIG
+                        <?=$projectAnalyser->getLabel('quantity.twig')?>
                     </li>
                 </ul>
             </li>
@@ -53,25 +53,25 @@
                 <span class="badge alert-info">
                     <?=$projectAnalyser->extractFromLoc('namespaces')?>
                 </span>
-                Namespaces
+                <?=$projectAnalyser->getLabel('quantity.namespaces')?>
             </li>
             <li class="list-group-item">
                 <span class="badge alert-info">
                     <?=$projectAnalyser->extractFromLoc('classes')?>
                 </span>
-                Classes
+                <?=$projectAnalyser->getLabel('quantity.classes')?>
             </li>
             <li class="list-group-item">
                 <span class="badge alert-info">
                     <?=$projectAnalyser->extractFromLoc('methods')?>
                 </span>
-                Méthodes
+                <?=$projectAnalyser->getLabel('quantity.methods')?>
             </li>
             <li class="list-group-item">
                 <span class="badge alert-info">
                     <?=$projectAnalyser->extractFromLoc('loc');?>
                 </span>
-                Lignes de code
+                <?=$projectAnalyser->getLabel('quantity.codeLines')?>
             </li>
             <?php } ?>
         </ul>

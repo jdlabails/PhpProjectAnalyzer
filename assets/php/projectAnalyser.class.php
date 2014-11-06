@@ -7,13 +7,33 @@
  */
 class projectAnalyser
 {
+
+    private $_dirRoot;
     private $_parameters;
     private $_reportPath;
+    private $_labels;
 
-    public function __construct($_parameters)
+    public function __construct()
     {
-        $this->_parameters = $_parameters;
-        $this->_reportPath = __DIR__.'/../../reports';
+        $this->_dirRoot = __DIR__.'/../../';
+        $this->_reportPath = $this->_dirRoot.'reports';
+
+        $this->_parameters = Spyc::YAMLLoad($this->_dirRoot.'assets/param.yml');
+
+        $availableLang = array('en', 'fr');
+        $lang = $this->getParam('lang');
+        $lang = in_array($lang, $availableLang) ? $lang : 'en';
+        $this->_labels = Spyc::YAMLLoad('assets/translations/'.$lang.'.yml');
+    }
+
+    public function getLabel($label)
+    {
+        return key_exists($label, $this->_labels) ? $this->_labels[$label] : $label;
+    }
+
+    public function isAnalyzeInProgress()
+    {
+        return file_exists($this->_dirRoot.'jetons/jetonAnalyse');
     }
 
     /**
@@ -342,7 +362,7 @@ class projectAnalyser
 
     function getAnalyseInfo()
     {
-        $file = __DIR__.'/../../jetons/timeAnalyse';
+        $file = $this->_dirRoot.'jetons/timeAnalyse';
         $res = array('date'=>'/', 'time'=>'/', 'mem'=>'/');
         if (file_exists($file)) {
             $res ['date']=date('d/m/y à H:i', filemtime($file));
