@@ -2,8 +2,6 @@
 These script are simple automating script to analyse a php project and give
 a constructed view of the results.
 
-Take care, it's all in French.
-
 
 It executes
  - PHPMD
@@ -28,19 +26,10 @@ And give a view like :
  - Move assets/param.dist.yml to assets/param.yml
  - Edit assets/param.yml to fit your project
  - Call yoursymfonyproject/PhpProjectAnalyzer/index.php with your nav.
- - Click on 'Lancer l'analyse'
-
-### Todo
-This project is a pure PHP code et bash scripts.
-It could be refactoring and a bundle for Symfony should be made.
-
-The following asset are missing
-
-Atoum testing
+ - Click on 'Start Scan'
 
 ### Road Map
 
- - English version
- - Better code structuration
  - DataBase following of the project
  - Atoum support
+ - Remote version to analyse several projects
