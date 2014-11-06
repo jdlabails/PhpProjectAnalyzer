@@ -16,10 +16,12 @@
                 <td><?=$projectAnalyser->getLabel('duration')?></td>
                 <td><?=$_derniereAnalyse['time'].' '.$projectAnalyser->getLabel('seconds')?></td>
             </tr>
+            <?php if ($projectAnalyser->isScoreEnable()) { ?>
             <tr>
                 <td><?=$projectAnalyser->getLabel('note')?></td>
                 <td><?=$_note?> / 20</td>
             </tr>
+            <?php } ?>
         </table>
     </div>
 </div>

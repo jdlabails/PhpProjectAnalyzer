@@ -372,23 +372,67 @@ class projectAnalyser
         return $res;
     }
 
+
+    public function isScoreEnable()
+    {
+        return $this->getParam('score', 'enable') == 'true';
+    }
+
     /**
      * 20/20 serait donné à un projet de 100kLoc tester à 100% avec CS ok
      * @param type $q_info
      * @param type $t_info
-     * @todo les pondérations pourraient être en param.yml
+     * @todo les pondérations pourraient être en param.yml, notament celle sur loc
      * @return type
      */
     function getNote($q_info, $t_info)
     {
-        $loc = $this->extractFromLoc('loc');
-        $cs = (int)$q_info['CS']['summary'] == 'ok';
-        $test = (int)$t_info['ok'];
-        $cc = (int)str_replace('%', '', $t_info['ccLine']);
+        if ( ! $this->isScoreEnable()) {
+            return 0;
+        }
 
-        $note = $cs*100 + $test*$cc + $loc/1000;
+        $loc    = $this->extractFromLoc('loc');
+        $cs     = (int)$q_info['CS']['summary'] == 'ok';
+        $test   = (int)$t_info['ok'];
+        $cc     = (int)str_replace('%', '', $t_info['ccLine']);
 
-        return round(($note/15), 2);
+        $csWeight       = $this->getScoreWeightParam('csWeight');
+        $testWeight     = $this->getScoreWeightParam('testWeight');
+        $locWeight      = $this->getScoreWeightParam('locWeight');
+
+        $projectSize    = $this->getParam('score', 'projectSize');
+        $maxSize = 50000;
+        switch ($projectSize) {
+            case 'small' :
+                $maxSize = 10000;
+                break;
+            default:
+            case 'medium':
+                $maxSize = 50000;
+                break;
+            case 'big':
+                $maxSize = 100000;
+                break;
+        }
+
+        $note = $cs*$csWeight + $test*$testWeight*($cc/100) + $loc*$locWeight/$maxSize;
+        $divide = ($csWeight + $testWeight + $locWeight) / 20;
+
+        return round(($note/$divide), 2);
+    }
+
+    function getScoreWeightParam($name)
+    {
+        $weight = $this->getParam('score', $name);
+        if ( ! is_int($weight)) {
+            return 100;
+        }
+
+        if ($weight < 0 || $weight > 100) {
+            return 100;
+        }
+
+        return $weight;
     }
 
     function getReadableDateTime($dt)

@@ -1,9 +1,8 @@
-title: Title of your project
-description: It's a ouaaaouhh project !
+title:          Title of your project
+description:    It's a ouaaaouhh project !
+lang :          en
 
-lang : en
-
-gitlabURL: www.urlgitlab.com
+gitlabURL:      www.urlgitlab.com
 
 # chemin d'analyse
 srcPath : /path/to/your/src
@@ -45,3 +44,11 @@ test :
     enable: true
     lib : phpunit
     testsuite : testSuite
+
+# score
+score:
+    enable:         true
+    csWeight:       100     # between 0 and 100, weighting of code sniffer
+    testWeight:     100     # between 0 and 100, weighting of testing
+    locWeight:      100     # between 0 and 100, weighting of code coverage
+    projectSize:    medium  # small : betwenn 0 and 5000, medium, between 5000 and 50000, big : > 50000
