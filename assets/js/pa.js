@@ -1,5 +1,5 @@
 $('document').ready(function () {
-
+    $(".help").popover({placement: 'left', html: true});
 });
 
 function lancerAnalyse() {

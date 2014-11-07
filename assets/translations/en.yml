@@ -3,8 +3,20 @@
 lastAnalyze: Last analysis
 duration: Duration
 seconds: seconds
-note: Score
 a: at
+
+# score
+score.note: Score
+score.popTitle: How score is calculated ?
+score.popContent.begin: "This score is based on quantitative and qualitative elements:"
+score.popContent.sizeProject: Project Size
+score.popContent.fitWeighting: You can adjust the weighting of these elements in the param.yml.
+score.popContent.currentSet: "You are currently set as:"
+score.popContent.weight: weight
+score.popContent.csWeight: Code sniffer weight
+score.popContent.testWeight: Tests weight
+score.popContent.sizeWeight: Size weight
+score.popContent.scale: Project scale
 
 # quantite
 quantity.quantity: Quantity
@@ -45,7 +57,7 @@ link.phpDoc: Generated documentation
 link.gitLabAccess: GitLab Access
 
 # lanceur
-launcher.launcher: Launcher
+launcher.launcher: Scan
 launcher.generateDoc: Generate  doc
 launcher.generateCoverage: Generate  code coverage
 launcher.launch: Start Scan

@@ -24,6 +24,8 @@ $_note              = $projectAnalyser->getNote($_quality_info, $_testInfo);
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="assets/js/jquery-2.1.0.min.js" type="text/javascript"></script>
+        <script src="assets/js/tooltip.js" type="text/javascript"></script>
+        <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="assets/js/pa.js" type="text/javascript"></script>
         <link href="assets/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
         <link href="assets/css/pa.css" type="text/css" rel="stylesheet" />

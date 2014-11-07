@@ -17,3 +17,17 @@
 #encartResultat table td{
     padding: 2px;
 }
+
+.popover {
+    color:grey;
+    max-width: 350px;
+    width:350px
+}
+
+.popover-title{
+    font-size: 18px;
+}
+
+.popover-content{
+    font-weight: normal;
+}

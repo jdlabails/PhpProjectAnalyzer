@@ -3,8 +3,19 @@
 lastAnalyze: Dernière analyse
 duration: Durée
 seconds: secondes
-note: Note
 a: à
+
+# score
+score.note: Note
+score.popTitle: Comment la note est-elle calculée ?
+score.popContent.begin: "Ce score est basé sur des éléments quantitatifs et qualitatifs :"
+score.popContent.sizeProject: Taille du projet
+score.popContent.fitWeighting: Vous pouvez adapter la pondération de ces éléments dans le param.yml.
+score.popContent.currentSet: "Vous êtes paramétrés comme suit :"
+score.popContent.csWeight: Pondération de code sniffer
+score.popContent.testWeight: Pondération des tests
+score.popContent.sizeWeight: Pondération de la taille
+score.popContent.scale: Echelle du projet
 
 # quantite
 quantity.quantity: Quantité
