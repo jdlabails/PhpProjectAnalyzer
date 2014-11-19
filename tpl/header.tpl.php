@@ -19,7 +19,10 @@
             <?php if ($projectAnalyser->isScoreEnable()) { ?>
             <tr>
                 <td><?=$projectAnalyser->getLabel('score.note')?></td>
-                <td>
+                <td <?php if ($_testInfo['dateTimeCC'] != $_testInfo['date']) { ?>
+                        style="color: red;font-weight: normal"
+                    <?php } ?>
+                    >
                 <?=$_note?> / 20
                 <img
                     src="assets/img/question.png"
