@@ -54,6 +54,8 @@ link.tools: Outils associés ou générés
 link.coverageReport: Rapport de code coverage
 link.phpDoc: Documentation générée
 link.gitLabAccess: Accès GitLab
+link.phpinfo: Php Info
+link.histo: Historique
 
 # lanceur
 launcher.launcher: Lanceur

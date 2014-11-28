@@ -148,7 +148,7 @@ class analyze implements JsonSerializable
 
     /**
      * Retourne une date lisible formaté selon la langue.
-     * 
+     *
      * @return string
      */
     function getReadableDateTime()
@@ -158,6 +158,17 @@ class analyze implements JsonSerializable
         } else {
             return date('Y-m-d H:i', $this->dateTime);
         }
+    }
+
+    /**
+     * Retourne une date formaté js utc
+     *
+     * @return string
+     */
+    function getDateTimeUTC()
+    {
+        date_default_timezone_set('UTC');
+        return ($this->dateTime * 1000) - (strtotime('02-01-1970 00:00:00') * 1000);
     }
 
     /**
@@ -615,5 +626,11 @@ class analyze implements JsonSerializable
     public function jsonSerialize()
     {
         return get_object_vars($this);
+    }
+
+    public function setFromArray($data) {
+        foreach ($data AS $key => $value) {
+            $this->{$key} = $value;
+        }
     }
 }

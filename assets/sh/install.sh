@@ -40,6 +40,7 @@ createDossier4Web ${DIR_REPORT}/DEPEND
 createDossier4Web ${DIR_REPORT}/DOCS
 createDossier4Web ${DIR_REPORT}/MD
 createDossier4Web ${DIR_REPORT}/TEST
+createDossier4Web ${DIR_REPORT}/HISTORIQUE
 
 createDossier4Web ${DIR_JETON}
 

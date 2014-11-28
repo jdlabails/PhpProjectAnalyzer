@@ -44,7 +44,59 @@ class projectAnalyser
      */
     public function getAnalyze()
     {
+        if ($this->isEnableHisto()) {
+            $this->historise();
+        }
         return $this->oAnalyze;
+    }
+
+    /**
+     * Retourne l'objet analyse
+     * @return analyze
+     */
+    public function getAnalyses()
+    {
+        $res = array();
+        $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
+        $string = file_get_contents($fileName);
+        $tab = json_decode($string, true);
+
+        foreach ($tab as $t) {
+            $a = new analyze();
+            $a->setFromArray($t);
+            $res []=$a;
+        }
+
+        return $res;
+    }
+
+    public function isEnableHisto()
+    {
+        return $this->isEnable('histo', true);
+    }
+
+    public function historise()
+    {
+        $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
+        $stream = fopen($fileName, 'w+');
+
+        $string = file_get_contents($fileName);
+
+        $tab = json_decode($string, true);
+
+        if ( $tab != null && !key_exists($this->oAnalyze->getDateTimeUTC(), $tab)) {
+            $tab += array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
+        } elseif ($tab == null) {
+            $tab = array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
+        }
+
+        if (!empty($tab)) {
+            if ($this->getParam('histo', 'jsonPretty') == 'true') {
+                fwrite($stream, json_encode($tab, JSON_PRETTY_PRINT));
+            } else {
+                fwrite($stream, json_encode($tab));
+            }
+        }
     }
 
     /**

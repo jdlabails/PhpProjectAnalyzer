@@ -12,11 +12,24 @@
             <?=$projectAnalyser->getLabel('link.coverageReport')?>
         </a>
         <br>
+
         <?php if ($projectAnalyser->isEnable('docs')) { ?>
         <a href="reports/DOCS/index.html" target="_blank">
             <?=$projectAnalyser->getLabel('link.phpDoc')?>
         </a>
         <?php } ?>
+
+        <?php if ($projectAnalyser->isEnable('histo', true)) { ?>
+        <br>
+        <a href="histo.php" target="_blank">
+            <?=$projectAnalyser->getLabel('link.histo')?>
+        </a>
+        <?php } ?>
+
+        <br>
+        <a href="phpinfo.php" target="_blank">
+            <?=$projectAnalyser->getLabel('link.phpinfo')?>
+        </a>
         <hr>
         <a href="<?=$projectAnalyser->getParam('gitlabURL')?>" target="_blank">
             <?=$projectAnalyser->getLabel('link.gitLabAccess')?>
