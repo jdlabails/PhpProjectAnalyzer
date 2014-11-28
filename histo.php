@@ -39,7 +39,40 @@ $a = $projectAnalyser->getAnalyze();
             <br>
             <div class="row">
                 <div class="col-md-6">
+                    <div class="panel panel-info" style="margin: 9% 11%;">
+                        <div class="panel-heading">
+                            Période
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="dateDu" class="col-sm-2 control-label">Du</label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control datePicker" id="dateDu" placeholder="Date de début">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateAu" class="col-sm-2 control-label">Au</label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control datePicker" id="dateAu" placeholder="Date de fin">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                      <button type="submit" class="btn btn-default">Voir</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div id="successAnalysis" style="width:100%; height:400px;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="quantite" style="width:100%; height:400px;"></div>
                 </div>
                 <div class="col-md-6">
                     <div id="quantite" style="width:100%; height:400px;"></div>
@@ -52,17 +85,32 @@ $a = $projectAnalyser->getAnalyze();
 
             <?php
             $res = $projectAnalyser->getAnalyses();
-            $dataLoc = 'dataLoc = [';
-            $dataNote = 'dataNote = [';
-            $dataCov = 'dataCov = [';
+            $dataLoc    = 'dataLoc = [';
+            $dataFile   = 'dataFile = [';
+            $dataPhp    = 'dataPhp = [';
+            $dataClasse = 'dataClasse = [';
+            $dataCs     = 'dataCs = [';
+            $dataTu     = 'dataTu = [';
+            $dataNote   = 'dataNote = [';
+            $dataCov    = 'dataCov = [';
             foreach ($projectAnalyser->getAnalyses() as $a) {
                 $dataLoc .= '['.$a->getDateTimeUTC().','.$a->getLoc().'],';
+                $dataFile .= '['.$a->getDateTimeUTC().','.$a->getNbFile().'],';
+                $dataPhp .= '['.$a->getDateTimeUTC().','.$a->getNbPhpFile().'],';
+                $dataClasse .= '['.$a->getDateTimeUTC().','.$a->getNbClasses().'],';
+                $dataCs .= '['.$a->getDateTimeUTC().','.$a->getCsSuccess().'],';
+                $dataTu .= '['.$a->getDateTimeUTC().','.$a->getTuSuccess().'],';
                 $dataNote .= '['.$a->getDateTimeUTC().','.$a->getScore().'],';
                 if ($a->getCov() != '/') {
                     $dataCov .= '['.$a->getDateTimeUTC().',"'.$a->getCov().'"],';
                 }
             }
             echo $dataLoc . '];';
+            echo $dataFile . '];';
+            echo $dataPhp . '];';
+            echo $dataClasse . '];';
+            echo $dataCs . '];';
+            echo $dataTu . '];';
             echo $dataNote . '];';
             echo $dataCov . '];';
             ?>

@@ -78,19 +78,18 @@ class projectAnalyser
     public function historise()
     {
         $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
-        $stream = fopen($fileName, 'w+');
-
-        $string = file_get_contents($fileName);
-
-        $tab = json_decode($string, true);
-
-        if ( $tab != null && !key_exists($this->oAnalyze->getDateTimeUTC(), $tab)) {
-            $tab += array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
-        } elseif ($tab == null) {
+        if (file_exists($fileName)) {
+            $string = file_get_contents($fileName);
+            $tab = json_decode($string, true);
+            if ( $tab != null && !key_exists($this->oAnalyze->getDateTimeUTC(), $tab)) {
+                $tab += array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
+            }
+        } else {
             $tab = array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
         }
 
         if (!empty($tab)) {
+            $stream = fopen($fileName, 'w+');
             if ($this->getParam('histo', 'jsonPretty') == 'true') {
                 fwrite($stream, json_encode($tab, JSON_PRETTY_PRINT));
             } else {
