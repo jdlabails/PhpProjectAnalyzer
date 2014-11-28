@@ -6,20 +6,20 @@
     </h1>
 </div>
 <div class="col-md-4" style="margin-top:23px; font-size:20px">
-    <div class="label-<?=$_testInfo['ok']?'success':'danger'?>" id="encartResultat">
+    <div class="label-<?=$a->getTuSuccess()?'success':'danger'?>" id="encartResultat">
         <table>
             <tr>
                 <td><?=$projectAnalyser->getLabel('lastAnalyze')?></td>
-                <td><?=$_derniereAnalyse['date']?></td>
+                <td><?=$a->getReadableDateTime()?></td>
             </tr>
             <tr>
                 <td><?=$projectAnalyser->getLabel('duration')?></td>
-                <td><?=$_derniereAnalyse['time']?></td>
+                <td><?=$a->getReadableExecTime()?></td>
             </tr>
             <?php if ($projectAnalyser->isScoreEnable()) { ?>
             <tr>
                 <td><?=$projectAnalyser->getLabel('score.note')?></td>
-                <td <?php if ($_testInfo['dateTimeCC'] != $_testInfo['date']) { ?>
+                <td <?php if ($_testInfo['dateTimeCC'] != $_testInfo['date'] && $a->getTuSuccess()) { ?>
                         style="color: red;font-weight: normal"
                     <?php } ?>
                     >

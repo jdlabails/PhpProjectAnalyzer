@@ -7,11 +7,12 @@
  */
 class projectAnalyser
 {
-
     private $_dirRoot;
     private $_parameters;
     private $_reportPath;
     private $_labels;
+
+    private $oAnalyze;
 
     public function __construct()
     {
@@ -24,13 +25,42 @@ class projectAnalyser
         $lang = $this->getParam('lang');
         $lang = in_array($lang, $availableLang) ? $lang : 'en';
         $this->_labels = Spyc::YAMLLoad('assets/translations/'.$lang.'.yml');
+
+        $this->oAnalyze = new analyze();
+        $this->oAnalyze
+            ->setLangue($this->_parameters['lang'])
+            ->setNbNamespace($this->extractFromLoc('namespaces'))
+            ->setNbClasses($this->extractFromLoc('classes'))
+            ->setNbMethod($this->extractFromLoc('methods'))
+            ;
+
+        $this->getCount();
+        $this->getAnalyseInfo();
     }
 
+    /**
+     * Retourne l'objet analyse
+     * @return analyze
+     */
+    public function getAnalyze()
+    {
+        return $this->oAnalyze;
+    }
+
+    /**
+     * Gestion de la trad
+     * @param string $label
+     * @return string
+     */
     public function getLabel($label)
     {
         return key_exists($label, $this->_labels) ? $this->_labels[$label] : $label;
     }
 
+    /**
+     * Vérifie si une analyse est en cours par présence du jeton
+     * @return type
+     */
     public function isAnalyzeInProgress()
     {
         return file_exists($this->_dirRoot.'jetons/jetonAnalyse');
@@ -120,11 +150,11 @@ class projectAnalyser
     function getCount()
     {
         $res = array(
-            'nbDossier' => $this->getCountFile('nbDossier.txt'),
-            'nbFichier' => $this->getCountFile('nbFichier.txt'),
-            'nbPHP' => $this->getCountFile('nbPHP.txt'),
-            'nbTwig' => $this->getCountFile('nbTwig.txt'),
-            'nbBundle' => $this->getCountFile('nbBundle.txt'),
+            'nbDossier'     => $this->getCountFile('nbDossier.txt'),
+            'nbFichier'     => $this->getCountFile('nbFichier.txt'),
+            'nbPHP'         => $this->getCountFile('nbPHP.txt'),
+            'nbTwig'        => $this->getCountFile('nbTwig.txt'),
+            'nbBundle'      => $this->getCountFile('nbBundle.txt'),
         );
 
         $nbCSS = $this->getCountFile('nbCSS.txt');
@@ -136,6 +166,18 @@ class projectAnalyser
         $res['nbCSS']=$nbCSS - $nbLibCSS;
         $res['nbLibJS']=$nbLibJS;
         $res['nbJS']=$nbJS - $nbLibJS;
+
+        $this->oAnalyze
+            ->setNbDir($res['nbDossier'])
+            ->setNbBundles($res['nbBundle'])
+            ->setNbFile($res['nbFichier'])
+            ->setNbPhpFile($res['nbPHP'])
+            ->setNbTwig($res['nbTwig'])
+            ->setNbCSSFile($res['nbCSS'])
+            ->setNbCSSLib($res['nbLibCSS'])
+            ->setNbJSFile($res['nbJS'])
+            ->setNbJSLib($res['nbLibJS'])
+            ;
 
         return $res;
     }
@@ -189,8 +231,11 @@ class projectAnalyser
 
     function getQualityInfo()
     {
+        $csAnalyse = $this->analyseReport('CS');
+        $this->oAnalyze->setCsSuccess($csAnalyse['CS']['summary']==='ok');
+
         return
-            $this->analyseReport('CS') +
+            $csAnalyse +
             $this->analyseReport('MD') +
             $this->analyseReport('CPD', false, '0.00% duplicated lines')
         ;
@@ -288,7 +333,7 @@ class projectAnalyser
                 // [30;42mOK (40 tests, 123 assertions)[0m
                 if (stripos($l, 'test') !== false && stripos($l, 'assertion') !== false) {
 
-                    $res['ok'] = strpos($l, '[30;42mOK');
+                    $res['ok'] = strpos($l, '[30;42mOK') !== false;
 
                     if ($res['ok']) {
                         list($t, $a) = explode(',', $l);
@@ -331,6 +376,11 @@ class projectAnalyser
             $res['cmd']=  file_get_contents($cmdFile);
         }
 
+        $this->oAnalyze
+            ->setTuSuccess($res['ok'])
+            ->setCov($res['coverage'])
+            ;
+
         return $res;
     }
 
@@ -363,20 +413,12 @@ class projectAnalyser
     function getAnalyseInfo()
     {
         $file = $this->_dirRoot.'jetons/timeAnalyse';
-        $res = array('date'=>'/', 'time'=>'/', 'mem'=>'/');
         if (file_exists($file)) {
-            $res ['date']=$this->getReadableDateTime(filemtime($file));
-            $res['time']= file_get_contents($file);
-
-            if ($res['time'] > 120) {
-                $res['time'] = round($res['time'] / 60, 0, PHP_ROUND_HALF_DOWN) . ' min '. ($res['time']%60).' sec ';
-            } else {
-                $res['time'].= ' sec';
-            }
-
+            $this->oAnalyze
+                ->setDateTime(filemtime($file))
+                ->setExecTime((int)file_get_contents($file))
+            ;
         }
-
-        return $res;
     }
 
 
@@ -399,6 +441,7 @@ class projectAnalyser
         }
 
         $loc    = $this->extractFromLoc('loc');
+        $this->oAnalyze->setLoc((int)$loc);
         $cs     = (int)$q_info['CS']['summary'] == 'ok';
         $test   = (int)$t_info['ok'];
         $cc     = (int)str_replace('%', '', $t_info['ccLine']);
@@ -425,7 +468,11 @@ class projectAnalyser
         $note = $cs*$csWeight + $test*$testWeight*($cc/100) + $loc*$locWeight/$maxSize;
         $divide = ($csWeight + $testWeight + $locWeight) / 20;
 
-        return round(($note/$divide), 2);
+        $score = round(($note/$divide), 2);
+
+        $this->oAnalyze->setScore($score);
+
+        return $score;
     }
 
     function getScoreWeightParam($name)
@@ -442,6 +489,11 @@ class projectAnalyser
         return $weight;
     }
 
+    /**
+     * Retourne une date lisible formaté selon la langue
+     * @param datetime $dt
+     * @return string
+     */
     function getReadableDateTime($dt)
     {
         if ($this->_parameters['lang'] == 'fr') {
