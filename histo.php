@@ -75,7 +75,7 @@ $a = $projectAnalyser->getAnalyze();
                     <div id="quantite" style="width:100%; height:400px;"></div>
                 </div>
                 <div class="col-md-6">
-                    <div id="quantite" style="width:100%; height:400px;"></div>
+                    <div id="successFail" style="width:100%; height:400px;"></div>
                 </div>
             </div>
         </div>
@@ -88,15 +88,20 @@ $a = $projectAnalyser->getAnalyze();
             $dataLoc    = 'dataLoc = [';
             $dataFile   = 'dataFile = [';
             $dataPhp    = 'dataPhp = [';
+            $dataJS     = 'dataJS = [';
+            $dataCSS    = 'dataCSS = [';
             $dataClasse = 'dataClasse = [';
             $dataCs     = 'dataCs = [';
             $dataTu     = 'dataTu = [';
             $dataNote   = 'dataNote = [';
             $dataCov    = 'dataCov = [';
-            foreach ($projectAnalyser->getAnalyses() as $a) {
+            $success = 0;
+            foreach ($projectAnalyser->getAnalyses() as $i => $a) {
                 $dataLoc .= '['.$a->getDateTimeUTC().','.$a->getLoc().'],';
                 $dataFile .= '['.$a->getDateTimeUTC().','.$a->getNbFile().'],';
                 $dataPhp .= '['.$a->getDateTimeUTC().','.$a->getNbPhpFile().'],';
+                $dataJS .= '['.$a->getDateTimeUTC().','.$a->getNbJSFile().'],';
+                $dataCSS .= '['.$a->getDateTimeUTC().','.$a->getNbCSSFile().'],';
                 $dataClasse .= '['.$a->getDateTimeUTC().','.$a->getNbClasses().'],';
                 $dataCs .= '['.$a->getDateTimeUTC().','.$a->getCsSuccess().'],';
                 $dataTu .= '['.$a->getDateTimeUTC().','.$a->getTuSuccess().'],';
@@ -104,10 +109,18 @@ $a = $projectAnalyser->getAnalyze();
                 if ($a->getCov() != '/') {
                     $dataCov .= '['.$a->getDateTimeUTC().',"'.$a->getCov().'"],';
                 }
+
+                $success += $a->getTuSuccess();
             }
+            $successPart = 100 * $success / $i;
+
+            echo 'successPart = '.$successPart.';';
+
             echo $dataLoc . '];';
             echo $dataFile . '];';
             echo $dataPhp . '];';
+            echo $dataJS . '];';
+            echo $dataCSS . '];';
             echo $dataClasse . '];';
             echo $dataCs . '];';
             echo $dataTu . '];';
