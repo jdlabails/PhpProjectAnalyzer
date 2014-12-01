@@ -17,6 +17,13 @@ DIR_PHAR=${DIR_PA}/_phar
 DIR_REPORT=${DIR_PA}/reports
 DIR_JETON=${DIR_PA}/jetons
 
+WEB_USER=apache:apache
+read -p "Please enter your web server user [apache:apache] : " INPUT
+if [ $INPUT = "www-data:www-data" ] 
+then 
+    WEB_USER=www-data:www-data
+fi
+
 
 function createDossier4Web {
     if [ ! -d $1 ]
@@ -26,7 +33,7 @@ function createDossier4Web {
     fi
 
     echo 'Change owner & rights of dir '$1
-    chown apache:apache $1
+    chown ${WEB_USER} $1
     chmod 755 $1
 }
 
@@ -46,5 +53,5 @@ createDossier4Web ${DIR_JETON}
 
 echo 'Change owner & rights of file '${DIR_ASSET_SH}/pa.sh
 touch ${DIR_ASSET_SH}/pa.sh
-chown apache:apache ${DIR_ASSET_SH}/pa.sh
+chown ${WEB_USER} ${DIR_ASSET_SH}/pa.sh
 chmod 755 ${DIR_ASSET_SH}/pa.sh
