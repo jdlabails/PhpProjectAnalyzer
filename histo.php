@@ -1,22 +1,5 @@
 
-<?php
-
-ini_set('display_errors', 1);
-
-require_once "assets/php/projectAnalyser.class.php";
-require_once "assets/php/analyze.class.php";
-require_once "assets/php/Spyc.php";
-
-$projectAnalyser    = new projectAnalyser();
-$_quality_info      = $projectAnalyser->getQualityInfo();
-$_testInfo          = $projectAnalyser->exploitTestReport();
-$_reportInfo        = $projectAnalyser->getReportInfo();
-$_note              = $projectAnalyser->getNote($_quality_info, $_testInfo);
-
-$a = new analyze();
-$a = $projectAnalyser->getAnalyze();
-
-?>
+<?php require_once "assets/php/inc.php"; ?>
 
 <!DOCTYPE html>
 <html>
@@ -82,52 +65,7 @@ $a = $projectAnalyser->getAnalyze();
     </body>
 
     <script>
-
-            <?php
-            $res = $projectAnalyser->getAnalyses();
-            $dataLoc    = 'dataLoc = [';
-            $dataFile   = 'dataFile = [';
-            $dataPhp    = 'dataPhp = [';
-            $dataJS     = 'dataJS = [';
-            $dataCSS    = 'dataCSS = [';
-            $dataClasse = 'dataClasse = [';
-            $dataCs     = 'dataCs = [';
-            $dataTu     = 'dataTu = [';
-            $dataNote   = 'dataNote = [';
-            $dataCov    = 'dataCov = [';
-            $success = 0;
-            foreach ($projectAnalyser->getAnalyses() as $i => $a) {
-                $dataLoc .= '['.$a->getDateTimeUTC().','.$a->getLoc().'],';
-                $dataFile .= '['.$a->getDateTimeUTC().','.$a->getNbFile().'],';
-                $dataPhp .= '['.$a->getDateTimeUTC().','.$a->getNbPhpFile().'],';
-                $dataJS .= '['.$a->getDateTimeUTC().','.$a->getNbJSFile().'],';
-                $dataCSS .= '['.$a->getDateTimeUTC().','.$a->getNbCSSFile().'],';
-                $dataClasse .= '['.$a->getDateTimeUTC().','.$a->getNbClasses().'],';
-                $dataCs .= '['.$a->getDateTimeUTC().','.$a->getCsSuccess().'],';
-                $dataTu .= '['.$a->getDateTimeUTC().','.$a->getTuSuccess().'],';
-                $dataNote .= '['.$a->getDateTimeUTC().','.$a->getScore().'],';
-                if ($a->getCov() != '/') {
-                    $dataCov .= '['.$a->getDateTimeUTC().',"'.$a->getCov().'"],';
-                }
-
-                $success += $a->getTuSuccess();
-            }
-            $successPart = 100 * $success / $i;
-
-            echo 'successPart = '.$successPart.';';
-
-            echo $dataLoc . '];';
-            echo $dataFile . '];';
-            echo $dataPhp . '];';
-            echo $dataJS . '];';
-            echo $dataCSS . '];';
-            echo $dataClasse . '];';
-            echo $dataCs . '];';
-            echo $dataTu . '];';
-            echo $dataNote . '];';
-            echo $dataCov . '];';
-            ?>
-
+        <?=$projectAnalyser->getTabJS4HistoGraph();?>
     </script>
 
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Classe basique regroupant les fonctions utilisées dans l'index
  *
@@ -7,6 +8,10 @@
  */
 class projectAnalyser
 {
+    use visualizer;
+    use scoreManager;
+    use histoManager;
+
     private $_dirRoot;
     private $_parameters;
     private $_reportPath;
@@ -16,16 +21,20 @@ class projectAnalyser
 
     public function __construct()
     {
+        // qq chemin
         $this->_dirRoot = __DIR__.'/../../';
         $this->_reportPath = $this->_dirRoot.'reports';
 
+        // les parameters
         $this->_parameters = Spyc::YAMLLoad($this->_dirRoot.'assets/param.yml');
 
+        // les libelles de l'appli
         $availableLang = array('en', 'fr');
         $lang = $this->getParam('lang');
         $lang = in_array($lang, $availableLang) ? $lang : 'en';
         $this->_labels = Spyc::YAMLLoad('assets/translations/'.$lang.'.yml');
 
+        // l'objet analyse
         $this->oAnalyze = new analyze();
         $this->oAnalyze
             ->setLangue($this->_parameters['lang'])
@@ -44,68 +53,12 @@ class projectAnalyser
      */
     public function getAnalyze()
     {
-        if ($this->isEnableHisto()) {
+        // lorsque cette methode est appelee, on en profite pour historiser si enable
+        if ($this->isEnable('histo', true)) {
             $this->historise();
         }
+
         return $this->oAnalyze;
-    }
-
-    /**
-     * Retourne l'objet analyse
-     * @return analyze
-     */
-    public function getAnalyses()
-    {
-        $res = array();
-        $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
-        $string = file_get_contents($fileName);
-        $tab = json_decode($string, true);
-
-        foreach ($tab as $t) {
-            $a = new analyze();
-            $a->setFromArray($t);
-            $res []=$a;
-        }
-
-        return $res;
-    }
-
-    public function isEnableHisto()
-    {
-        return $this->isEnable('histo', true);
-    }
-
-    public function historise()
-    {
-        $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
-        if (file_exists($fileName)) {
-            $string = file_get_contents($fileName);
-            $tab = json_decode($string, true);
-            if ( $tab != null && !key_exists($this->oAnalyze->getDateTimeUTC(), $tab)) {
-                $tab += array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
-            }
-        } else {
-            $tab = array($this->oAnalyze->getDateTimeUTC() => $this->oAnalyze);
-        }
-
-        if (!empty($tab)) {
-            $stream = fopen($fileName, 'w+');
-            if ($this->getParam('histo', 'jsonPretty') == 'true') {
-                fwrite($stream, json_encode($tab, JSON_PRETTY_PRINT));
-            } else {
-                fwrite($stream, json_encode($tab));
-            }
-        }
-    }
-
-    /**
-     * Gestion de la trad
-     * @param string $label
-     * @return string
-     */
-    public function getLabel($label)
-    {
-        return key_exists($label, $this->_labels) ? $this->_labels[$label] : $label;
     }
 
     /**
@@ -248,22 +201,6 @@ class projectAnalyser
     }
 
     /**
-     * Adapte le rapport phpunit pour mettre en vert le res
-     * @param type $file
-     * @return type
-     */
-    function adaptPhpUnitReport($file)
-    {
-        $txt = '<br>'.file_get_contents($file);
-        $txt = str_replace('[30;42m', '<span style="color:green">', $txt);
-        $txt = str_replace('[37;41m', '<span style="color:red">', $txt);
-        $txt = str_replace('[31;1m', '<span style="">', $txt);
-        $txt = str_replace('[41;37m', '<span style="">', $txt);
-        $txt = str_replace('[0m', '</span>', $txt);
-        return $txt;
-    }
-
-    /**
      * Extrait une info d'un xml et la renvoi
      * @param string $cle balise xml recherchee
      * @param string $reportFilePath chemin à l'intéreur du dossier report
@@ -283,6 +220,7 @@ class projectAnalyser
     function getQualityInfo()
     {
         $csAnalyse = $this->analyseReport('CS');
+        
         $this->oAnalyze->setCsSuccess($csAnalyse['CS']['summary']==='ok');
 
         return
@@ -314,40 +252,10 @@ class projectAnalyser
         return $res;
     }
 
-    function afficheRapport($content)
-    {
-        switch ($content) {
-            case '' :
-                $txt = 'Rapport vide :D';
-                break;
-            case 'none':
-                $txt = 'Aucun report généré :(';
-                break;
-            default :
-                $txt = $content;
-                break;
-        }
-
-        return $txt;
-    }
-
-    function afficheSummary ($summary)
-    {
-        switch ($summary) {
-            case 'ok' :
-                $txt = '<span class="badge alert-success">OK</span>';
-                break;
-            case 'ko':
-                $txt = '<span class="badge alert-warning">KO</span>';
-                break;
-            default :
-                $txt = '<span class="badge alert-warning">NC</span>';
-                break;
-        }
-
-        return $txt;
-    }
-
+    /**
+     * Exploit les rapports de test unitaire
+     * @return type
+     */
     function exploitTestReport()
     {
         $res = array(
@@ -369,7 +277,7 @@ class projectAnalyser
         $testReportFile = $this->_reportPath.'/TEST/report.txt';
         if (file_exists($testReportFile)) {
             $res['report'] = $this->adaptPhpUnitReport($testReportFile);
-            $res['date']=$this->getReadableDateTime(filemtime($testReportFile));
+            $res['date'] = $this->getDateGeneration($testReportFile);
 
             $lines = file($testReportFile);
             foreach ($lines as $l) {
@@ -435,6 +343,10 @@ class projectAnalyser
         return $res;
     }
 
+    /**
+     * Lit les rapports d'analyse
+     * @return array
+     */
     function getReportInfo()
     {
         $tabReports = array('MD', 'CS', 'CPD', 'DEPEND', 'LOC', 'DOCS');
@@ -454,13 +366,16 @@ class projectAnalyser
             $cmdFile = $this->_reportPath.'/'.$report.'/cmd.txt';
             $res[$report]['cmd']='';
             if (file_exists($cmdFile)) {
-                $res[$report]['cmd']=  file_get_contents($cmdFile);
+                $res[$report]['cmd']= file_get_contents($cmdFile);
             }
         }
 
         return $res;
     }
 
+    /**
+     * Lit la date et le temps d'execution de l'analyse
+     */
     function getAnalyseInfo()
     {
         $file = $this->_dirRoot.'jetons/timeAnalyse';
@@ -469,88 +384,6 @@ class projectAnalyser
                 ->setDateTime(filemtime($file))
                 ->setExecTime((int)file_get_contents($file))
             ;
-        }
-    }
-
-
-    public function isScoreEnable()
-    {
-        return $this->getParam('score', 'enable') == 'true';
-    }
-
-    /**
-     * 20/20 serait donné à un projet de 100kLoc tester à 100% avec CS ok
-     * @param type $q_info
-     * @param type $t_info
-     * @todo les pondérations pourraient être en param.yml, notament celle sur loc
-     * @return type
-     */
-    function getNote($q_info, $t_info)
-    {
-        if ( ! $this->isScoreEnable()) {
-            return 0;
-        }
-
-        $loc    = $this->extractFromLoc('loc');
-        $this->oAnalyze->setLoc((int)$loc);
-        $cs     = (int)$q_info['CS']['summary'] == 'ok';
-        $test   = (int)$t_info['ok'];
-        $cc     = (int)str_replace('%', '', $t_info['ccLine']);
-
-        $csWeight       = $this->getScoreWeightParam('csWeight');
-        $testWeight     = $this->getScoreWeightParam('testWeight');
-        $locWeight      = $this->getScoreWeightParam('locWeight');
-
-        $projectSize    = $this->getParam('score', 'projectSize');
-        $maxSize = 50000;
-        switch ($projectSize) {
-            case 'small' :
-                $maxSize = 10000;
-                break;
-            default:
-            case 'medium':
-                $maxSize = 50000;
-                break;
-            case 'big':
-                $maxSize = 100000;
-                break;
-        }
-
-        $note = $cs*$csWeight + $test*$testWeight*($cc/100) + $loc*$locWeight/$maxSize;
-        $divide = ($csWeight + $testWeight + $locWeight) / 20;
-
-        $score = round(($note/$divide), 2);
-
-        $this->oAnalyze->setScore($score);
-
-        return $score;
-    }
-
-    function getScoreWeightParam($name)
-    {
-        $weight = $this->getParam('score', $name);
-        if ( ! is_int($weight)) {
-            return 100;
-        }
-
-        if ($weight < 0 || $weight > 100) {
-            return 100;
-        }
-
-        return $weight;
-    }
-
-    /**
-     * Retourne une date lisible formaté selon la langue
-     * @param datetime $dt
-     * @return string
-     */
-    function getReadableDateTime($dt)
-    {
-        if ($this->_parameters['lang'] == 'fr') {
-            return date('d/m/y à H:i', $dt);
-        } else {
-            return date('Y-m-d H:i', $dt);
         }
     }
 }
