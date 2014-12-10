@@ -291,7 +291,7 @@ class projectAnalyser
                 // [30;42mOK (40 tests, 123 assertions)[0m
                 if (stripos($l, 'test') !== false && stripos($l, 'assertion') !== false) {
 
-                    $res['ok'] = strpos($l, '[30;42mOK') !== false;
+                    $res['ok'] = strpos($l, 'OK') !== false;
 
                     if ($res['ok']) {
                         list($t, $a) = explode(',', $l);
