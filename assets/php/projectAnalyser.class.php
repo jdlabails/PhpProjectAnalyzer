@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Classe basique regroupant les fonctions utilisées dans l'index
  *
@@ -220,7 +219,7 @@ class projectAnalyser
     function getQualityInfo()
     {
         $csAnalyse = $this->analyseReport('CS');
-        
+
         $this->oAnalyze->setCsSuccess($csAnalyse['CS']['summary']==='ok');
 
         return

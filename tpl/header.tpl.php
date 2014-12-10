@@ -19,7 +19,7 @@
             <?php if ($projectAnalyser->isScoreEnable()) { ?>
             <tr>
                 <td><?=$projectAnalyser->getLabel('score.note')?></td>
-                <td <?php if ($_testInfo['dateTimeCC'] != $_testInfo['date'] && $a->getTuSuccess()) { ?>
+                <td <?php if ($a->getReadableDateTime() != $_testInfo['dateTimeCC'] && $a->getTuSuccess()) { ?>
                         style="color: red;font-weight: normal"
                     <?php } ?>
                     >
