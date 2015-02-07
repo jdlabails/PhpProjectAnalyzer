@@ -25,8 +25,7 @@ $('document').ready(function () {
         yAxis: [{
                 title: {
                     text: 'LOC'
-                },
-                min: 0
+                }
             }, {//--- Secondary yAxis
                 title: {
                     text: 'Score'
@@ -53,24 +52,6 @@ $('document').ready(function () {
                 yAxis: 1,
                 name: 'Code coverage',
                 data: dataCov
-            }, {
-                type: 'pie',
-                name: '% success',
-                data: [{
-                        name: 'Fail',
-                        y: 25,
-                        color: Highcharts.getOptions().colors[3] // Jane's color
-                    }, {
-                        name: 'Success',
-                        y: 75,
-                        color: Highcharts.getOptions().colors[2] // John's color
-                    }],
-                center: [100, 80],
-                size: 100,
-                showInLegend: false,
-                dataLabels: {
-                    enabled: true
-                }
             }
         ]
     });
@@ -99,8 +80,7 @@ $('document').ready(function () {
         yAxis: {
             title: {
                 text: 'Nb'
-            },
-            min: 0
+            }
         },
         tooltip: {
             headerFormat: '<b>{series.name}</b><br>',
@@ -113,8 +93,11 @@ $('document').ready(function () {
                 // that in JavaScript, months start at 0 for January, 1 for February etc.
                 data: dataFile
             }, {
-                name: 'Nb Php File',
-                data: dataPhp
+                name: 'Nb JS File',
+                data: dataJS
+            }, {
+                name: 'Nb CSS File',
+                data: dataCSS
             }, {
                 name: 'Nb classes',
                 data: dataClasse
@@ -141,7 +124,10 @@ $('document').ready(function () {
             plotShadow: false
         },
         title: {
-            text: 'Browser market shares at a specific website, 2014'
+            text: 'Success and Fail'
+        },
+        subtitle: {
+            text: 'Used as debug tool'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -162,20 +148,22 @@ $('document').ready(function () {
         },
         series: [{
                 type: 'pie',
-                name: 'Browser share',
-                data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
-                ]
+                name: '% success',
+                data: [{
+                        name: 'Fail',
+                        y: (100 - successPart),
+                        color: Highcharts.getOptions().colors[3] // Jane's color
+                    }, {
+                        name: 'Success',
+                        y: successPart,
+                        color: Highcharts.getOptions().colors[2] // John's color
+                    }],
+                center: [200, 100],
+                size: 200,
+                showInLegend: false,
+                dataLabels: {
+                    enabled: true
+                }
             }]
     });
 

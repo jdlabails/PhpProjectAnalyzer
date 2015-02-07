@@ -1,22 +1,5 @@
 
-<?php
-
-ini_set('display_errors', 1);
-
-require_once "assets/php/projectAnalyser.class.php";
-require_once "assets/php/analyze.class.php";
-require_once "assets/php/Spyc.php";
-
-$projectAnalyser    = new projectAnalyser();
-$_quality_info      = $projectAnalyser->getQualityInfo();
-$_testInfo          = $projectAnalyser->exploitTestReport();
-$_reportInfo        = $projectAnalyser->getReportInfo();
-$_note              = $projectAnalyser->getNote($_quality_info, $_testInfo);
-
-$a = new analyze();
-$a = $projectAnalyser->getAnalyze();
-
-?>
+<?php require_once "assets/php/inc.php"; ?>
 
 <!DOCTYPE html>
 <html>
@@ -75,46 +58,14 @@ $a = $projectAnalyser->getAnalyze();
                     <div id="quantite" style="width:100%; height:400px;"></div>
                 </div>
                 <div class="col-md-6">
-                    <div id="quantite" style="width:100%; height:400px;"></div>
+                    <div id="successFail" style="width:100%; height:400px;"></div>
                 </div>
             </div>
         </div>
     </body>
 
     <script>
-
-            <?php
-            $res = $projectAnalyser->getAnalyses();
-            $dataLoc    = 'dataLoc = [';
-            $dataFile   = 'dataFile = [';
-            $dataPhp    = 'dataPhp = [';
-            $dataClasse = 'dataClasse = [';
-            $dataCs     = 'dataCs = [';
-            $dataTu     = 'dataTu = [';
-            $dataNote   = 'dataNote = [';
-            $dataCov    = 'dataCov = [';
-            foreach ($projectAnalyser->getAnalyses() as $a) {
-                $dataLoc .= '['.$a->getDateTimeUTC().','.$a->getLoc().'],';
-                $dataFile .= '['.$a->getDateTimeUTC().','.$a->getNbFile().'],';
-                $dataPhp .= '['.$a->getDateTimeUTC().','.$a->getNbPhpFile().'],';
-                $dataClasse .= '['.$a->getDateTimeUTC().','.$a->getNbClasses().'],';
-                $dataCs .= '['.$a->getDateTimeUTC().','.$a->getCsSuccess().'],';
-                $dataTu .= '['.$a->getDateTimeUTC().','.$a->getTuSuccess().'],';
-                $dataNote .= '['.$a->getDateTimeUTC().','.$a->getScore().'],';
-                if ($a->getCov() != '/') {
-                    $dataCov .= '['.$a->getDateTimeUTC().',"'.$a->getCov().'"],';
-                }
-            }
-            echo $dataLoc . '];';
-            echo $dataFile . '];';
-            echo $dataPhp . '];';
-            echo $dataClasse . '];';
-            echo $dataCs . '];';
-            echo $dataTu . '];';
-            echo $dataNote . '];';
-            echo $dataCov . '];';
-            ?>
-
+        <?=$projectAnalyser->getTabJS4HistoGraph();?>
     </script>
 
 </html>

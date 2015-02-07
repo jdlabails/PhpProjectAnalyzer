@@ -40,7 +40,7 @@
                     <li class="list-group-item">
                         <span class="badge alert-success"><?=$_testInfo['ccLine']?></span>
                         <?=$projectAnalyser->getLabel('quality.coverage')?>
-                        <?php if ($_testInfo['dateTimeCC'] != $_testInfo['date']) { ?>
+                        <?php if ($_testInfo['dateTimeCC'] != $a->getReadableDateTime() ) { ?>
                         <br>
                         <div style=" font-size: 75%;color: red;">
                             <?=$_testInfo['dateTimeCC']?>

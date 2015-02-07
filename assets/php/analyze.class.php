@@ -167,7 +167,6 @@ class analyze implements JsonSerializable
      */
     function getDateTimeUTC()
     {
-        date_default_timezone_set('UTC');
         return ($this->dateTime * 1000) - (strtotime('02-01-1970 00:00:00') * 1000);
     }
 
