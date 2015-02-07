@@ -32,24 +32,31 @@ class scriptManager
 
     function lancerAnalyse()
     {
+        // si une analyse est en cours on dégage
         if (file_exists($this->_jetonAnalysePath)) {
             return 'Analyse en cours';
         }
 
+        // si on demande ou on en est et qu'on s'est pas encore fait degagé alors c fini
         if (filter_input(INPUT_GET, 'statut') == 1) {
             return 'ok';
         }
 
         // si on arrive là on doit lancer l'analyse selon la config
         if ($this->_mustGenerate) {
-            $this->creerAnalyse();
+            $this->creerAnalyses();
         }
 
+        // lancement unitaire
+        if (filter_input(INPUT_POST, 'one') != '') {
+            $this->_paShPath = $this->_dirRoot.'assets/sh/one/'.filter_input(INPUT_POST, 'one').'.sh';
+        }
+        
         // on vérifie qu'on peut executer le sh
         if(!is_executable($this->_paShPath)) {
             chmod($this->_paShPath, 0777);
             if(!is_executable($this->_paShPath)) {
-                return 'pa.sh non executable';
+                return basename($this->_paShPath).' non executable';
             }
         }
 
@@ -79,24 +86,25 @@ class scriptManager
     /**
      * On creer le pa.sh selon les param
      */
-    function creerAnalyse()
-    {
-        $contentSh = '';
-
+    function creerAnalyses()
+    {        
         $header = file_get_contents($this->_tplShDirPath.'/header.tpl.sh');
         $header = str_replace('%%%dir_src%%%', $this->_parameters['srcPath'], $header);
-        $contentSh .= str_replace('%%%dir_pa%%%', $this->_parameters['paPath'], $header);
+        $header = str_replace('%%%dir_pa%%%', $this->_parameters['paPath'], $header);
 
+        $contentGlobalSh = $contentCSSh = $contentCbfSh = $header;
+        
         if ($this->_parameters['count'] == 'true'){
-            $contentSh .= file_get_contents($this->_tplShDirPath.'/count.tpl.sh');
+            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/count.tpl.sh');
         }
 
         if ($this->_parameters['cpd'] == 'true'){
-            $contentSh .= file_get_contents($this->_tplShDirPath.'/cpd.tpl.sh');
+            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/cpd.tpl.sh');
         }
 
         if ($this->_parameters['cs']['enable'] == 'true'){
             $csContent = file_get_contents($this->_tplShDirPath.'/cs.tpl.sh');
+            $cbfContent = file_get_contents($this->_tplShDirPath.'/cbf.tpl.sh');
             $std = 'PSR2';
             if (
                 strpos($this->_parameters['cs']['standard'], 'PSR') !== null &&
@@ -105,24 +113,34 @@ class scriptManager
                 $std = $this->_parameters['cs']['standard'];
             }
 
-            $contentSh .= str_replace('%%%standard%%%', $std, $csContent);
+            $cbfContent = str_replace('%%%standard%%%', $std, $cbfContent);
+            $csContent = str_replace('%%%standard%%%', $std, $csContent);
+            $contentGlobalSh .= $csContent;
+            
+            $contentCSSh .= $csContent;
+            $contentCSSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
+            file_put_contents($this->_dirRoot.'assets/sh/one/cs.sh', $contentCSSh);
+            
+            $contentCbfSh .= $cbfContent;
+            $contentCbfSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
+            file_put_contents($this->_dirRoot.'assets/sh/one/cbf.sh', $contentCbfSh);
         }
 
         if ($this->_parameters['depend'] == 'true'){
-            $contentSh .= file_get_contents($this->_tplShDirPath.'/depend.tpl.sh');
+            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/depend.tpl.sh');
         }
 
         if ($this->_parameters['loc'] == 'true'){
-            $contentSh .= file_get_contents($this->_tplShDirPath.'/loc.tpl.sh');
+            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/loc.tpl.sh');
         }
 
         if ($this->_parameters['md']['enable'] == 'true'){
             $mdContent = file_get_contents($this->_tplShDirPath.'/md.tpl.sh');
-            $contentSh .= str_replace('%%%rule_set%%%', $this->getMDRuleSet(), $mdContent);
+            $contentGlobalSh .= str_replace('%%%rule_set%%%', $this->getMDRuleSet(), $mdContent);
         }
 
         if ($this->_parameters['docs'] == 'true'){
-            $contentSh .= file_get_contents($this->_tplShDirPath.'/docs.tpl.sh');
+            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/docs.tpl.sh');
         }
 
         if (
@@ -130,14 +148,14 @@ class scriptManager
             $this->_parameters['test']['lib'] == 'phpunit'
             ){
             $testContent = file_get_contents($this->_tplShDirPath.'/phpunit.tpl.sh');
-            $contentSh .= str_replace('%%%testsuite%%%', $this->_parameters['test']['testsuite'], $testContent);
+            $contentGlobalSh .= str_replace('%%%testsuite%%%', $this->_parameters['test']['testsuite'], $testContent);
         }
 
-        $contentSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
+        $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
 
-        //echo '<pre>'.$contentSh.'</pre>';
+        //echo '<pre>'.$contentGlobalSh.'</pre>';
 
-        file_put_contents($this->_paShPath, $contentSh);
+        file_put_contents($this->_paShPath, $contentGlobalSh);
     }
 
     private function  getMDRuleSet()

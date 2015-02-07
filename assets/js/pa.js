@@ -2,18 +2,43 @@ $('document').ready(function () {
     $(".help").popover({placement: 'left', html: true});
 });
 
+function lancerUneAnalyse(one) {
+   
+    $.ajax({
+        url: "analyser.php",
+        data: {
+            'one' : one
+        },
+        method: 'post'
+    }).done(function (data) {
+        $('#formLanceur'+one).hide();
+        $('#refreshLanceur'+one).show();
+        setTimeout(refreshLanceur, 3000);
+    });
+
+    return false;
+}
+
+
+function refreshOneLanceur(one) {
+    $('#formLanceur'+one).hide();
+    $('#refreshLanceur'+one).show();
+    $.ajax({
+        url: "analyser.php?statut=1"
+    }).done(function (data) {
+        if (data == 'ok') {
+            $('#rechargePage'+one).show();
+            $('#refreshLanceur'+one).hide();
+        } else {
+            setTimeout(function(){refreshOneLanceur(one);}, 3000);
+        }
+    });
+}
+
+
+
 function lancerAnalyse() {
-    var data = [];
-
-    if (document.getElementById('genDoc').checked) {
-        console.log('gendoc coché');
-        data.doc = 1;
-    }
-    if (document.getElementById('genCC').checked) {
-        console.log('genCC coché');
-        data.cc = 1;
-    }
-
+   
     $.ajax({
         url: "analyser.php",
         data: {

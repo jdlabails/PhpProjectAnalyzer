@@ -9,9 +9,9 @@ $tabAvailableAnalysis = array(
     'docs'  => 'PhpDoc : Documentation'
 );
 
-foreach ($tabAvailableAnalysis as $k => $title) {
-    if ($projectAnalyser->isEnable($k, true)) {
-        $report = ($k == 'test') ? $_testInfo : $_reportInfo[strtoupper($k)];
+foreach ($tabAvailableAnalysis as $idAnalyse => $title) {
+    if ($projectAnalyser->isEnable($idAnalyse, true)) {
+        $report = ($idAnalyse == 'test') ? $_testInfo : $_reportInfo[strtoupper($idAnalyse)];
         include('tpl/blockReportDetail.tpl.php');
     }
 }

@@ -8,5 +8,9 @@
             <pre class="pre-scrollable"><?=$report['report']?></pre>
             <code><?=$report['cmd']?></code>
         </div>
+        <button onclick="lancerUneAnalyse('<?=$idAnalyse?>')">Relancer</button>
+        <?php if ($idAnalyse == 'cs') { ?>
+        <button onclick="lancerUneAnalyse('cbf')">Réparer</button>
+        <?php } ?>
     </div>
 </div>
