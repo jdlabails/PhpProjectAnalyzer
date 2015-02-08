@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__."/Spyc.php";
 
 /**
  * scriptManager s'occupe de générer et de lancer le script d'analyse
@@ -16,6 +15,8 @@ class scriptManager
     private $_paShPath;
     private $_paramPath;
     private $_tplShDirPath;
+    
+    use scriptBuilder, paramManager;
 
     function __construct()
     {
@@ -47,7 +48,7 @@ class scriptManager
             $this->creerAnalyses();
         }
 
-        // lancement unitaire
+        // lancement unitaire : le sh à lancer n'est pas la meme
         if (filter_input(INPUT_POST, 'one') != '') {
             $this->_paShPath = $this->_dirRoot.'assets/sh/one/'.filter_input(INPUT_POST, 'one').'.sh';
         }
@@ -83,81 +84,7 @@ class scriptManager
         return $txt.' lancée ('.$cmd.')';
     }
 
-    /**
-     * On creer le pa.sh selon les param
-     */
-    function creerAnalyses()
-    {        
-        $header = file_get_contents($this->_tplShDirPath.'/header.tpl.sh');
-        $header = str_replace('%%%dir_src%%%', $this->_parameters['srcPath'], $header);
-        $header = str_replace('%%%dir_pa%%%', $this->_parameters['paPath'], $header);
-
-        $contentGlobalSh = $contentCSSh = $contentCbfSh = $header;
-        
-        if ($this->_parameters['count'] == 'true'){
-            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/count.tpl.sh');
-        }
-
-        if ($this->_parameters['cpd'] == 'true'){
-            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/cpd.tpl.sh');
-        }
-
-        if ($this->_parameters['cs']['enable'] == 'true'){
-            $csContent = file_get_contents($this->_tplShDirPath.'/cs.tpl.sh');
-            $cbfContent = file_get_contents($this->_tplShDirPath.'/cbf.tpl.sh');
-            $std = 'PSR2';
-            if (
-                strpos($this->_parameters['cs']['standard'], 'PSR') !== null &&
-                strlen($this->_parameters['cs']['standard']) < 8
-                ) {
-                $std = $this->_parameters['cs']['standard'];
-            }
-
-            $cbfContent = str_replace('%%%standard%%%', $std, $cbfContent);
-            $csContent = str_replace('%%%standard%%%', $std, $csContent);
-            $contentGlobalSh .= $csContent;
-            
-            $contentCSSh .= $csContent;
-            $contentCSSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
-            file_put_contents($this->_dirRoot.'assets/sh/one/cs.sh', $contentCSSh);
-            
-            $contentCbfSh .= $cbfContent;
-            $contentCbfSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
-            file_put_contents($this->_dirRoot.'assets/sh/one/cbf.sh', $contentCbfSh);
-        }
-
-        if ($this->_parameters['depend'] == 'true'){
-            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/depend.tpl.sh');
-        }
-
-        if ($this->_parameters['loc'] == 'true'){
-            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/loc.tpl.sh');
-        }
-
-        if ($this->_parameters['md']['enable'] == 'true'){
-            $mdContent = file_get_contents($this->_tplShDirPath.'/md.tpl.sh');
-            $contentGlobalSh .= str_replace('%%%rule_set%%%', $this->getMDRuleSet(), $mdContent);
-        }
-
-        if ($this->_parameters['docs'] == 'true'){
-            $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/docs.tpl.sh');
-        }
-
-        if (
-            $this->_parameters['test']['enable'] == 'true' &&
-            $this->_parameters['test']['lib'] == 'phpunit'
-            ){
-            $testContent = file_get_contents($this->_tplShDirPath.'/phpunit.tpl.sh');
-            $contentGlobalSh .= str_replace('%%%testsuite%%%', $this->_parameters['test']['testsuite'], $testContent);
-        }
-
-        $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
-
-        //echo '<pre>'.$contentGlobalSh.'</pre>';
-
-        file_put_contents($this->_paShPath, $contentGlobalSh);
-    }
-
+    
     private function  getMDRuleSet()
     {
         $availableRule = array('cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode');

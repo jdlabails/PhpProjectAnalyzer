@@ -7,9 +7,7 @@
  */
 class projectAnalyser
 {
-    use visualizer;
-    use scoreManager;
-    use histoManager;
+    use visualizer, scoreManager, histoManager, paramManager;
 
     private $_dirRoot;
     private $_parameters;
@@ -67,37 +65,6 @@ class projectAnalyser
     public function isAnalyzeInProgress()
     {
         return file_exists($this->_dirRoot.'jetons/jetonAnalyse');
-    }
-
-    /**
-     * Va chercher les param du fichier yml
-     * @param string $name cle du param
-     * @return string value du param
-     */
-    function getParam($name, $attr = '')
-    {
-        if (isset($this->_parameters[$name])) {
-            if ($attr != '' && isset($this->_parameters[$name][$attr])) {
-                return $this->_parameters[$name][$attr];
-            }
-
-            return $this->_parameters[$name];
-        }
-
-        return '';
-    }
-
-    /**
-     * Renvoi vrai si la param est à true dans le yml
-     * @param type $paramName
-     * @return boolean
-     */
-    function isEnable($paramName, $explicit = false)
-    {
-        if ($explicit) {
-            return $this->getParam($paramName, 'enable') === true;
-        }
-        return $this->getParam($paramName) === true;
     }
 
     function extractFromLoc($param)
