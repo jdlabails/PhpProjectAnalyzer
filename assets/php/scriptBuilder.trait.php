@@ -26,9 +26,10 @@ trait scriptBuilder
                         $contentSh .= str_replace('%%%rule_set%%%', $this->getMDRuleSet(), $contentSh);
                         break;
                     case 'test':
-                        if ($this->_parameters['test']['lib'] == 'phpunit'){
-                            $testContent = file_get_contents($this->_tplShDirPath.'/phpunit.tpl.sh');
-                            $contentSh = str_replace('%%%testsuite%%%', $this->_parameters['test']['testsuite'], $testContent);
+                        var_dump($param);
+                        if ($param['lib'] == 'phpunit'){
+                            $contentSh = file_get_contents($this->_tplShDirPath.'/test.tpl.sh');
+                            $contentSh = str_replace('%%%testsuite%%%', $param['testsuite'], $contentSh);
                         }
                         break;
                     case 'cs':
@@ -36,8 +37,8 @@ trait scriptBuilder
                         $cbfContent = file_get_contents($this->_tplShDirPath.'/cbf.tpl.sh');
                         $std = 'PSR2';
                         if (
-                            strpos($this->_parameters['cs']['standard'], 'PSR') !== null &&
-                            strlen($this->_parameters['cs']['standard']) < 8
+                            strpos($param['standard'], 'PSR') !== null &&
+                            strlen($param['standard']) < 8
                             ) {
                             $std = $this->_parameters['cs']['standard'];
                         }
@@ -66,6 +67,22 @@ trait scriptBuilder
 
         $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
         file_put_contents($this->_paShPath, $contentGlobalSh);
+    }
+    
+    
+    private function  getMDRuleSet()
+    {
+        $availableRule = array('cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode');
+        $tabRule=[];
+
+        foreach ($availableRule as $r) {
+            if ($this->_parameters['md']['rules'][$r] == 'true')
+            {
+                $tabRule[]=$r;
+            }
+        }
+
+        return implode(',', $tabRule);
     }
     
     private function getHeader()

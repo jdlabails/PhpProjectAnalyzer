@@ -83,20 +83,5 @@ class scriptManager
 
         return $txt.' lancée ('.$cmd.')';
     }
-
     
-    private function  getMDRuleSet()
-    {
-        $availableRule = array('cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode');
-        $tabRule=[];
-
-        foreach ($availableRule as $r) {
-            if ($this->_parameters['md']['rules'][$r] == 'true')
-            {
-                $tabRule[]=$r;
-            }
-        }
-
-        return implode(',', $tabRule);
-    }
 }

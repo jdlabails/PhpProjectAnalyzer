@@ -11,14 +11,11 @@
                     <h3 class="panel-title">Voici la commande lancée</h3>
                 </div>
                 <div class="panel-body">
-                    <code><?=$report['cmd']?></code>
+                    <code><?=nl2br($report['cmd'])?></code>
                 </div>              
             </div>
             <div class="modal-footer">
-                <button  type="button" class="btn btn-warning" onclick="lancerUneAnalyse('<?=$idAnalyse?>')">Relancer</button>
-                <?php if ($idAnalyse == 'cs') { ?>
-                <button onclick="lancerUneAnalyse('cbf')">Réparer</button>
-                <?php } ?>
+                <button  type="button" class="btn btn-warning" onclick="$('#cmd_<?=$idAnalyse?>').modal('hide');lancerUneAnalyse('<?=$idAnalyse?>')">Relancer</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>

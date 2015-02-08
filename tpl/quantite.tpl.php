@@ -3,7 +3,7 @@
         <h3>
             <span class="glyphicon glyphicon-list"></span>
             <?=$projectAnalyser->getLabel('quantity.quantity')?>
-            <span class="dropdown optionsTool" style="float: right">
+            <span class="dropdown optionsTool" style="float: right; display: none">
                 <button class="btn btn-default dropdown-toggle optionsTool" style="border:none" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                     <span class="glyphicon glyphicon-option-vertical"></span>
                 </button>

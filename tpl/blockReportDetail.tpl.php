@@ -13,8 +13,8 @@ if ($idAnalyse == 'depend') {
         </div>
         <div class="panel-body">
             <pre class="pre-scrollable"><?=$_reportInfo['DEPEND']['report']?></pre>
-            <code><?=$_reportInfo['DEPEND']['cmd']?></code>
-            <!--<img src='DEPEND/jdepend.svg' width="90%">
+            <!--<code><?=$_reportInfo['DEPEND']['cmd']?></code>
+            <img src='DEPEND/jdepend.svg' width="90%">
             <img src='DEPEND/pyramid.svg' width="40%">
 
             <dl style="display: inline-table;text-align: right;width: 40%;">
@@ -57,12 +57,7 @@ if ($idAnalyse == 'depend') {
         </div>
         <div class="panel-body">
             <pre class="pre-scrollable"><?=$report['report']?></pre>
-            <code><?=$report['cmd']?></code>
         </div>
-        <button onclick="lancerUneAnalyse('<?=$idAnalyse?>')">Relancer</button>
-        <?php if ($idAnalyse == 'cs') { ?>
-        <button onclick="lancerUneAnalyse('cbf')">Réparer</button>
-        <?php } ?>
     </div>
 </div>
 

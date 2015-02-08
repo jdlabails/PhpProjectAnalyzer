@@ -300,6 +300,11 @@ class projectAnalyser
         if (file_exists($cmdFile)) {
             $res['cmd']=  file_get_contents($cmdFile);
         }
+        
+        $cmdManuelleFile = $this->_reportPath.'/TEST/cmdManuelle.txt';
+        if (file_exists($cmdManuelleFile)) {
+            $res['cmdManuelle']=  file_get_contents($cmdManuelleFile);
+        }
 
         $this->oAnalyze
             ->setTuSuccess($res['ok'])
@@ -333,6 +338,20 @@ class projectAnalyser
             $res[$report]['cmd']='';
             if (file_exists($cmdFile)) {
                 $res[$report]['cmd']= file_get_contents($cmdFile);
+            }
+            
+            $cmdManuelleFile = $this->_reportPath.'/'.$report.'/cmdManuelle.txt';
+            $res[$report]['cmdManuelle']='';
+            if (file_exists($cmdManuelleFile)) {
+                $res[$report]['cmdManuelle']= file_get_contents($cmdManuelleFile);
+            }
+            
+            if ($report == 'CS') {                
+                $cmdRepFile = $this->_reportPath.'/'.$report.'/cmdRep.txt';
+                $res[$report]['cmdRep']='';
+                if (file_exists($cmdRepFile)) {
+                    $res[$report]['cmdRep']= file_get_contents($cmdRepFile);
+                }
             }
         }
 

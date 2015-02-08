@@ -11,31 +11,13 @@ function lancerUneAnalyse(one) {
         },
         method: 'post'
     }).done(function (data) {
-        $('#formLanceur'+one).hide();
-        $('#refreshLanceur'+one).show();
+        $('#formLanceur').hide();
+        $('#refreshLanceur').show();
         setTimeout(refreshLanceur, 3000);
     });
 
     return false;
 }
-
-
-function refreshOneLanceur(one) {
-    $('#formLanceur'+one).hide();
-    $('#refreshLanceur'+one).show();
-    $.ajax({
-        url: "analyser.php?statut=1"
-    }).done(function (data) {
-        if (data == 'ok') {
-            $('#rechargePage'+one).show();
-            $('#refreshLanceur'+one).hide();
-        } else {
-            setTimeout(function(){refreshOneLanceur(one);}, 3000);
-        }
-    });
-}
-
-
 
 function lancerAnalyse() {
    
