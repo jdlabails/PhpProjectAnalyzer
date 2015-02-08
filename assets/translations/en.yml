@@ -75,4 +75,9 @@ details.notGenerated: Not generated
 details.emptyReport: Empty report
 details.noReport: No generated report
 
-
+#outil
+outil.detail: See report
+outil.reparer: Fix
+outil.cmd.lancee: Launched command
+outil.cmd.manuelle: Manual Launch Command
+outil.relancer: Re-scan
