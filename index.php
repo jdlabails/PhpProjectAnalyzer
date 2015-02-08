@@ -12,6 +12,7 @@
         <script src="assets/js/tooltip.js" type="text/javascript"></script>
         <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="assets/js/pa.js" type="text/javascript"></script>
+        <link rel="icon" href="assets/img/favicon.ico" />
         <link href="assets/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
         <link href="assets/css/pa.css" type="text/css" rel="stylesheet" />
     </head>
