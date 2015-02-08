@@ -14,13 +14,13 @@ trait visualizer
     {
         switch ($summary) {
             case 'ok' :
-                $txt = '<span class="badge alert-success">OK</span>';
+                $txt = '<span class="badge alert-success value">OK</span>';
                 break;
             case 'ko':
-                $txt = '<span class="badge alert-warning">KO</span>';
+                $txt = '<span class="badge alert-warning value">KO</span>';
                 break;
             default :
-                $txt = '<span class="badge alert-warning">NC</span>';
+                $txt = '<span class="badge alert-warning value">NC</span>';
                 break;
         }
 

@@ -60,6 +60,7 @@ link.histo: History
 
 # lanceur
 launcher.launcher: Scan
+launcher.baseline: Scan your code
 launcher.generateDoc: Generate  doc
 launcher.generateCoverage: Generate  code coverage
 launcher.launch: Start Scan
@@ -68,7 +69,7 @@ launcher.analyzeFinished: Analysis is complete, refresh the page.
 launcher.refresh: Refresh the page
 
 # details
-details.see: See details
+details.see: See detailed reports
 details.generatedOn: Generated on
 details.notGenerated: Not generated
 details.emptyReport: Empty report

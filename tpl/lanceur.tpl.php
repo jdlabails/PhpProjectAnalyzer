@@ -1,6 +1,12 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3><?=$projectAnalyser->getLabel('launcher.launcher')?></h3>
+        <h3>            
+            <span class="glyphicon glyphicon-cog"></span>
+            <?=$projectAnalyser->getLabel('launcher.launcher')?>
+        </h3>
+        <div style=" font-size: 75%;color: white;">
+            <?=$projectAnalyser->getLabel('launcher.baseline')?>
+        </div>
     </div>
     <div class="panel-body">
         <div id="formLanceur" style="display: <?=$projectAnalyser->isAnalyzeInProgress()?'none':'block'?>" >

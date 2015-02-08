@@ -59,6 +59,7 @@ link.histo: Historique
 
 # lanceur
 launcher.launcher: Lanceur
+launcher.baseline: Analyser votre code
 launcher.generateDoc: Générer la doc
 launcher.generateCoverage: Générer le code coverage
 launcher.launch: Lancer l'analyse
@@ -67,8 +68,15 @@ launcher.analyzeFinished: Analyse terminée, rafraîchissez la page.
 launcher.refresh: Rafraîchir la page
 
 # details
-details.see: Voir les détails
+details.see: Voir tous les rapports
 details.generatedOn: Généré le
 details.notGenerated: Non généré
 details.emptyReport: Rapport vide
 details.noReport: Aucun report généré
+
+#outil
+outil.detail: Voir le rapport
+outil.reparer: Réparer
+outil.cmd.lancee: Commande lancée 
+outil.cmd.manuelle: Commande de lancement manuelle
+outil.relancer: Relancer

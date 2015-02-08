@@ -1,6 +1,7 @@
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3>
+        <h3>            
+            <span class="glyphicon glyphicon-link"></span>
             <?=$projectAnalyser->getLabel('link.link')?>
         </h3>
         <div style=" font-size: 75%;color: #777;">
