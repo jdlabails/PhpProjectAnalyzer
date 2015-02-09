@@ -6,7 +6,6 @@ gitlabURL:      www.urlgitlab.com
 
 # chemin d'analyse
 srcPath : /path/to/your/src
-paPath : /path/to/your/PhpProjectAnalyser
 
 # métrique quantitative
 count : true

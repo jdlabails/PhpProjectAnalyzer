@@ -19,9 +19,9 @@ DIR_JETON=${DIR_PA}/jetons
 
 WEB_USER=apache:apache
 read -p "Please enter your web server user [apache:apache] : " INPUT
-if [ $INPUT = "www-data:www-data" ] 
+if [ $INPUT != "" ] 
 then 
-    WEB_USER=www-data:www-data
+    WEB_USER=$INPUT
 fi
 
 
@@ -48,6 +48,8 @@ createDossier4Web ${DIR_REPORT}/DOCS
 createDossier4Web ${DIR_REPORT}/MD
 createDossier4Web ${DIR_REPORT}/TEST
 createDossier4Web ${DIR_REPORT}/HISTORIQUE
+
+createDossier4Web ${DIR_ASSET_SH}/one
 
 createDossier4Web ${DIR_JETON}
 

@@ -7,16 +7,16 @@
  */
 trait scriptBuilder
 {
-    
+
     private $header = '';
-    
+
     /**
      * On creer le pa.sh selon les param
      */
     function creerAnalyses()
-    {        
+    {
         $contentGlobalSh = $contentCSSh = $contentCbfSh = $this->getHeader();
-        
+
         foreach ($this->_parameters as $idAnalyse => $param) {
             if ($this->isEnable($idAnalyse) && file_exists($this->_tplShDirPath.'/'.$idAnalyse.'.tpl.sh')) {
                 $contentSh = '';
@@ -45,7 +45,7 @@ trait scriptBuilder
 
                         $cbfContent = str_replace('%%%standard%%%', $std, $cbfContent);
                         $contentSh = str_replace('%%%standard%%%', $std, $contentSh);
-                        
+
                         $contentCbfSh .= $cbfContent;
                         $contentCbfSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
                         file_put_contents($this->_dirRoot.'assets/sh/one/cbf.sh', $contentCbfSh);
@@ -54,22 +54,22 @@ trait scriptBuilder
                         $contentSh = file_get_contents($this->_tplShDirPath.'/'.$idAnalyse.'.tpl.sh');
                         break;
                 }
-                                
+
                 $contentGlobalSh .= $contentSh;
-                
+
                 $content = $this->getHeader();
                 $content .= $contentSh;
                 $content .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
-                
+
                 file_put_contents($this->_dirRoot.'assets/sh/one/'.$idAnalyse.'.sh', $content);
             }
-        }        
+        }
 
         $contentGlobalSh .= file_get_contents($this->_tplShDirPath.'/footer.tpl.sh');
         file_put_contents($this->_paShPath, $contentGlobalSh);
     }
-    
-    
+
+
     private function  getMDRuleSet()
     {
         $availableRule = array('cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode');
@@ -84,21 +84,21 @@ trait scriptBuilder
 
         return implode(',', $tabRule);
     }
-    
+
     private function getHeader()
     {
         if ($this->header == '') {
             $this->header = file_get_contents($this->_tplShDirPath.'/header.tpl.sh');
             $this->header = str_replace('%%%dir_src%%%', $this->_parameters['srcPath'], $this->header);
-            $this->header = str_replace('%%%dir_pa%%%', $this->_parameters['paPath'], $this->header);
+            $this->header = str_replace('%%%dir_pa%%%', __DIR__.'/../../', $this->header);
         }
-        
+
         return $this->header;
     }
-    
+
     private function creerScriptAnalyse($idAnalyse)
     {
-        
+
     }
 
 }

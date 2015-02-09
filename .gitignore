@@ -1,5 +1,5 @@
 reports/*
-assets/param.yml
+/assets/param.yml
 /assets/sh/pa.sh
 /assets/sh/one/*
 jetonAnalyse
