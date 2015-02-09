@@ -26,7 +26,6 @@ trait scriptBuilder
                         $contentSh .= str_replace('%%%rule_set%%%', $this->getMDRuleSet(), $contentSh);
                         break;
                     case 'test':
-                        var_dump($param);
                         if ($param['lib'] == 'phpunit'){
                             $contentSh = file_get_contents($this->_tplShDirPath.'/test.tpl.sh');
                             $contentSh = str_replace('%%%testsuite%%%', $param['testsuite'], $contentSh);
