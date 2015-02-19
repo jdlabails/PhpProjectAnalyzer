@@ -15,6 +15,7 @@ class scriptManager
     private $_paShPath;
     private $_paramPath;
     private $_tplShDirPath;
+    private $_phpDirPath;
     
     use scriptBuilder, paramManager;
 
@@ -25,6 +26,7 @@ class scriptManager
         $this->_jetonAnalysePath    = $this->_dirRoot.'/jetons/jetonAnalyse';
         $this->_paShPath            = $this->_dirRoot.'assets/sh/pa.sh';
         $this->_tplShDirPath        = $this->_dirRoot.'assets/sh/init';
+        $this->_phpDirPath          = $this->_dirRoot.'assets/php';
 
         $this->_parameters          = Spyc::YAMLLoad($this->_paramPath);
 

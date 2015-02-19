@@ -5,7 +5,7 @@ lang :          en
 gitlabURL:      www.urlgitlab.com
 
 # chemin d'analyse
-srcPath : /absolute/path/to/your/src
+srcPath : /Redis/src
 
 # métrique quantitative
 count : true
@@ -40,11 +40,9 @@ docs : true
 
 # tests unitaires et fonctionnels
 test :
-    enable: true
-    lib : phpunit       # phpunit || atoum
-    phpunitTestSuite : testSuite
-    atoumPath : /absolute/path/to/your/atoum/dir
-    atoumTestDir : /absolute/path/to/your/test/dir
+    enable: false
+    lib : phpunit
+    testsuite : testSuite
 
 # score
 score:
