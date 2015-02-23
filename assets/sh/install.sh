@@ -13,7 +13,7 @@
 #Parametres generaux
 DIR_ASSET_SH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DIR_PA=${DIR_ASSET_SH}/../..
-DIR_PHAR=${DIR_PA}/_phar
+DIR_ASSET_PHP=${DIR_ASSET_SH}/../php
 DIR_REPORT=${DIR_PA}/reports
 DIR_JETON=${DIR_PA}/jetons
 
@@ -57,3 +57,7 @@ echo 'Change owner & rights of file '${DIR_ASSET_SH}/pa.sh
 touch ${DIR_ASSET_SH}/pa.sh
 chown ${WEB_USER} ${DIR_ASSET_SH}/pa.sh
 chmod 755 ${DIR_ASSET_SH}/pa.sh
+
+
+chown ${WEB_USER} ${DIR_ASSET_PHP}/atoum.cc.php
+chmod 755 ${DIR_ASSET_PHP}/atoum.cc.php

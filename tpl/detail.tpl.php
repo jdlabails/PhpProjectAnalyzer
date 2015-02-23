@@ -1,7 +1,7 @@
 <?php
 
 $tabAvailableAnalysis = array(
-    'test'      => 'PhpUnit : Tests fonctionnels et unitaires',
+    'test'      => 'Tests fonctionnels et unitaires',
     'md'        => 'PhpMD : Mess Detector',
     'cpd'       => 'CPD : Copy-Paste Detector',
     'cs'        => 'CS : Code Sniffer',
@@ -22,5 +22,3 @@ foreach ($tabAvailableAnalysis as $idAnalyse => $title) {
         }
     }
 }
-
-

@@ -7,8 +7,7 @@
  */
 trait scriptBuilder
 {
-
-    private $header = '';
+    private $header         = '';
 
     /**
      * On creer le pa.sh selon les param
@@ -27,8 +26,19 @@ trait scriptBuilder
                         break;
                     case 'test':
                         if ($param['lib'] == 'phpunit'){
-                            $contentSh = file_get_contents($this->_tplShDirPath.'/test.tpl.sh');
-                            $contentSh = str_replace('%%%testsuite%%%', $param['testsuite'], $contentSh);
+                            $contentSh = file_get_contents($this->_tplShDirPath.'/testPhpUnit.tpl.sh');
+                            $contentSh = str_replace('%%%testsuite%%%', $param['phpunitTestSuite'], $contentSh);
+                        }
+                        if ($param['lib'] == 'atoum'){
+                            $contentSh = file_get_contents($this->_tplShDirPath.'/testAtoum.tpl.sh');
+                            $contentSh = str_replace('%%%pathAtoum%%%', $param['atoumPath'], $contentSh);
+                            $contentSh = str_replace('%%%dirTestAtoum%%%', $param['atoumTestDir'], $contentSh);
+                            // modif atoum.cc.php
+                            $contentAtoumCC = file_get_contents($this->_phpDirPath.'/atoum.cc.tpl.php');
+                            $contentAtoumCC = str_replace('%%%projectName%%%', $param['title'], $contentAtoumCC);
+                            $contentAtoumCC = str_replace('%%%ppaPath%%%', $this->_dirRoot, $contentAtoumCC);
+                            
+                            file_put_contents($this->_dirRoot.'assets/php/atoum.cc.php', $contentAtoumCC);
                         }
                         break;
                     case 'cs':

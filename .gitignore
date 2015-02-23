@@ -5,3 +5,5 @@ reports/*
 jetonAnalyse
 jetons/*
 output.log
+/nbproject/
+*~
