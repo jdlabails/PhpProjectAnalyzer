@@ -34,11 +34,11 @@ trait scriptBuilder
                             $contentSh = str_replace('%%%pathAtoum%%%', $param['atoumPath'], $contentSh);
                             $contentSh = str_replace('%%%dirTestAtoum%%%', $param['atoumTestDir'], $contentSh);
                             // modif atoum.cc.php
-                            $contentAtoumCC = file_get_contents($this->_phpDirPath.'/atoum.cc.php');
+                            $contentAtoumCC = file_get_contents($this->_phpDirPath.'/atoum.cc.tpl.php');
                             $contentAtoumCC = str_replace('%%%projectName%%%', $param['title'], $contentAtoumCC);
                             $contentAtoumCC = str_replace('%%%ppaPath%%%', $this->_dirRoot, $contentAtoumCC);
                             
-                            file_put_contents($this->_dirRoot.'assets/php/atoum.php', $contentAtoumCC);
+                            file_put_contents($this->_dirRoot.'assets/php/atoum.cc.php', $contentAtoumCC);
                         }
                         break;
                     case 'cs':

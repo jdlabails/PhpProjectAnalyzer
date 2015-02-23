@@ -242,59 +242,93 @@ class projectAnalyser
 
         $testReportFile = $this->_reportPath.'/TEST/report.txt';
         if (file_exists($testReportFile)) {
+            
             $res['report'] = $this->adaptPhpUnitReport($testReportFile);
+            
             $res['date'] = $this->getDateGeneration($testReportFile);
 
             $lines = file($testReportFile);
-            foreach ($lines as $l) {
-                // si on est sur la ligne des metrique d'execution du test
-                // Time: 6.8 minutes, Memory: 141.00Mb
-                if (strpos($l, 'Time') !== false && strpos($l, 'Memory') !== false) {
-                    list($t, $m) = explode(',', $l);
-                    list($_, $res['exeTime']) = explode(':', $t);
-                    list($_, $res['exeMem']) = explode(':', $m);
-                }
+            
+            if ($this->_parameters['test']['lib'] == 'phpunit') {
+                foreach ($lines as $l) {
 
-                // [30;42mOK (40 tests, 123 assertions)[0m
-                if (stripos($l, 'test') !== false && stripos($l, 'assertion') !== false) {
+                    // si on est sur la ligne des metrique d'execution du test
+                    // Time: 6.8 minutes, Memory: 141.00Mb
+                    if (strpos($l, 'Time') !== false && strpos($l, 'Memory') !== false) {
+                        list($t, $m) = explode(',', $l);
+                        list($_, $res['exeTime']) = explode(':', $t);
+                        list($_, $res['exeMem']) = explode(':', $m);
+                    }
 
-                    $res['ok'] = strpos($l, 'OK') !== false;
+                    // [30;42mOK (40 tests, 123 assertions)[0m
+                    if (stripos($l, 'test') !== false && stripos($l, 'assertion') !== false) {
 
-                    if ($res['ok']) {
-                        list($t, $a) = explode(',', $l);
+                        $res['ok'] = strpos($l, 'OK') !== false;
 
-                        list($_, $nb) = explode('(', $t);
-                        $res['nbTest'] = str_ireplace('tests', '', $nb);
+                        if ($res['ok']) {
+                            list($t, $a) = explode(',', $l);
 
-                        list($nb, $_) = explode(')', $a);
-                        $res['nbAssertions'] = str_ireplace('assertions', '', $nb);
-                    } else {
-                        list($t, $a, $_) = explode(',', $l);
+                            list($_, $nb) = explode('(', $t);
+                            $res['nbTest'] = str_ireplace('tests', '', $nb);
 
-                        list($_, $res['nbTest']) = explode(':', $t);
+                            list($nb, $_) = explode(')', $a);
+                            $res['nbAssertions'] = str_ireplace('assertions', '', $nb);
+                        } else {
+                            list($t, $a, $_) = explode(',', $l);
 
-                        list($_,  $res['nbAssertions']) = explode(':', $a);
+                            list($_, $res['nbTest']) = explode(':', $t);
+
+                            list($_,  $res['nbAssertions']) = explode(':', $a);
+                        }
+                    }
+                }                
+                
+                $covReportFile = $this->_reportPath.'/TEST/coverage.txt';
+                if (file_exists($covReportFile)) {
+                    $res['dateTimeCC']=$this->getReadableDateTime(filemtime($covReportFile));
+
+                    $lines = file($covReportFile);
+                    foreach ($lines as $k=>$v) {
+                        if (strpos($v, 'Summary:') !== false) {
+                            list($_, $res['ccClasse']) = explode(':', $lines[$k+1]);
+                            list($_, $res['ccMethod']) = explode(':', $lines[$k+2]);
+                            list($_, $res['ccLine']) = explode(':', $lines[$k+3]);
+                            list($res['ccLine'], $_) = explode('(', $res['ccLine']);
+
+                            break;
+                        }
                     }
                 }
-            }
-        }
+            } // phpunit
+            
+            if ($this->_parameters['test']['lib'] == 'atoum') {
+                $nbLines = count($lines);
+                list($_, $res['exeTime']) = explode(':', $lines[$nbLines-2]);
+                
+                //Success (4 tests, 40/40 methods, 0 void method, 0 skipped method, 265 assertions)!
+                $line = $lines[$nbLines-1];
+                $res['ok'] = strpos($line, 'Success') !== false;
+                if ($res['ok']) {
+                    $items = explode(',', $line);
 
-        $covReportFile = $this->_reportPath.'/TEST/coverage.txt';
-        if (file_exists($covReportFile)) {
-            $res['dateTimeCC']=$this->getReadableDateTime(filemtime($covReportFile));
+                    list($_, $nb) = explode('(', $items[0]);
+                    $res['nbTest'] = str_ireplace('tests', '', $nb);
 
-            $lines = file($covReportFile);
-            foreach ($lines as $k=>$v) {
-                if (strpos($v, 'Summary:') !== false) {
-                    list($_, $res['ccClasse']) = explode(':', $lines[$k+1]);
-                    list($_, $res['ccMethod']) = explode(':', $lines[$k+2]);
-                    list($_, $res['ccLine']) = explode(':', $lines[$k+3]);
-                    list($res['ccLine'], $_) = explode('(', $res['ccLine']);
-
-                    break;
+                    $res['nbAssertions'] = str_ireplace('assertions)!', '', array_pop($items));
+                    
+                    foreach ($lines as $l) {
+                        if (strpos($l, 'Code coverage value:') !== false) {
+                            $res['ccLine'] = str_ireplace('> Code coverage value: ', '', $l);
+                        }
+                    }
+                    
+                    $res['dateTimeCC']=$this->getReadableDateTime(filemtime($testReportFile));
+                } else {
+                    
                 }
-            }
+            } // atoum
         }
+
 
         $cmdFile = $this->_reportPath.'/TEST/cmd.txt';
         if (file_exists($cmdFile)) {

@@ -43,7 +43,7 @@ test :
     enable: true
     lib : phpunit       # phpunit || atoum
     phpunitTestSuite : testSuite
-    atoumPath : /absolute/path/to/your/atoum/dir
+    atoumPath : /home/smith/www/projectX/vendor/bin/atoum
     atoumTestDir : /absolute/path/to/your/test/dir
 
 # score
