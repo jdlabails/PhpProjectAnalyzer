@@ -236,8 +236,7 @@ class projectAnalyser
             'ccClasse'      => '/',
             'ccMethod'      => '/',
             'ccLine'        => '/',
-            'report'        => '',
-
+            'report'        => ''
         );
 
         $testReportFile = $this->_reportPath.'/TEST/report.txt';
