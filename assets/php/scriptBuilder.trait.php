@@ -27,7 +27,7 @@ trait scriptBuilder
                     case 'test':
                         if ($param['lib'] == 'phpunit'){
                             $contentSh = file_get_contents($this->_tplShDirPath.'/testPhpUnit.tpl.sh');
-                            $contentSh = str_replace('%%%testsuite%%%', $param['testsuite'], $contentSh);
+                            $contentSh = str_replace('%%%testsuite%%%', $param['phpunitTestSuite'], $contentSh);
                         }
                         if ($param['lib'] == 'atoum'){
                             $contentSh = file_get_contents($this->_tplShDirPath.'/testAtoum.tpl.sh');
