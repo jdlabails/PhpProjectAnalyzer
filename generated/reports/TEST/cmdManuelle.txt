@@ -1,0 +1,1 @@
+/home/jd/html/Redis/vendor/bin/atoum -d /home/jd/html/Redis/tests 

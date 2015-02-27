@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * scriptManager s'occupe de générer et de lancer le script d'analyse
  *
@@ -16,17 +15,17 @@ class scriptManager
     private $_paramPath;
     private $_tplShDirPath;
     private $_phpDirPath;
-    
+
     use scriptBuilder, paramManager;
 
     function __construct()
     {
-        $this->_dirRoot             = __DIR__.'/../../';
-        $this->_paramPath           = $this->_dirRoot.'assets/param.yml';
-        $this->_jetonAnalysePath    = $this->_dirRoot.'/jetons/jetonAnalyse';
-        $this->_paShPath            = $this->_dirRoot.'assets/sh/pa.sh';
-        $this->_tplShDirPath        = $this->_dirRoot.'assets/sh/init';
-        $this->_phpDirPath          = $this->_dirRoot.'assets/php';
+        $this->_dirRoot             = __DIR__.'/../../../';
+        $this->_paramPath           = $this->_dirRoot.'core/param.yml';
+        $this->_jetonAnalysePath    = $this->_dirRoot.'generated/jetons/jetonAnalyse';
+        $this->_paShPath            = $this->_dirRoot.'generated/sh/pa.sh';
+        $this->_tplShDirPath        = $this->_dirRoot.'tpl/sh';
+        $this->_phpDirPath          = $this->_dirRoot.'generated/php';
 
         $this->_parameters          = Spyc::YAMLLoad($this->_paramPath);
 
@@ -52,9 +51,9 @@ class scriptManager
 
         // lancement unitaire : le sh à lancer n'est pas la meme
         if (filter_input(INPUT_POST, 'one') != '') {
-            $this->_paShPath = $this->_dirRoot.'assets/sh/one/'.filter_input(INPUT_POST, 'one').'.sh';
+            $this->_paShPath = $this->_dirRoot.'generated/sh/one/'.filter_input(INPUT_POST, 'one').'.sh';
         }
-        
+
         // on vérifie qu'on peut executer le sh
         if(!is_executable($this->_paShPath)) {
             chmod($this->_paShPath, 0777);
@@ -81,9 +80,9 @@ class scriptManager
         }
 
         // on lance l'analyse, c'est à dire le sh
-        exec('nohup '.$cmd. ' > jetons/output.log 2> jetons/error.log &');
+        exec('nohup '.$cmd. ' > generated/jetons/output.log 2> generated/jetons/error.log &');
 
         return $txt.' lancée ('.$cmd.')';
     }
-    
+
 }

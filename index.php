@@ -1,5 +1,5 @@
 
-<?php require_once "assets/php/inc.php"; ?>
+<?php require_once "core/inc.php"; ?>
 
 <!DOCTYPE html>
 <html>
@@ -18,26 +18,26 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row"><?php include('tpl/header.tpl.php'); ?></div>
+            <div class="row"><?php include('tpl/view/header.tpl.php'); ?></div>
             <br>
             <div class="row">
-                <div class="col-md-4"><?php include('tpl/quantite.tpl.php'); ?></div>
+                <div class="col-md-4"><?php include('tpl/view/quantite.tpl.php'); ?></div>
 
-                <div class="col-md-4"><?php include('tpl/qualite.tpl.php'); ?></div>
+                <div class="col-md-4"><?php include('tpl/view/qualite.tpl.php'); ?></div>
 
-                <div class="col-md-2">                    
-                    <?php 
-                    include('tpl/lanceur.tpl.php'); 
-                    include('tpl/btnDetail.tpl.php'); 
+                <div class="col-md-2">
+                    <?php
+                    include('tpl/view/lanceur.tpl.php');
+                    include('tpl/view/btnDetail.tpl.php');
                     ?>
                 </div>
-                 <div class="col-md-2">                    
-                    <?php include('tpl/lien.tpl.php');?>
+                 <div class="col-md-2">
+                    <?php include('tpl/view/lien.tpl.php');?>
                 </div>
             </div>
 
             <div class="row">
-                <?php include('tpl/detail.tpl.php'); ?>
+                <?php include('tpl/view/detail.tpl.php'); ?>
             </div>
         </div>
     </body>

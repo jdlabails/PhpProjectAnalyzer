@@ -1,0 +1,1 @@
+php /var/www/html/PhpProjectAnalyzer/assets/php/../..//assets/_phar/phpcs.phar --extensions=php --standard=PSR2 /home/jd/html/Redis/src

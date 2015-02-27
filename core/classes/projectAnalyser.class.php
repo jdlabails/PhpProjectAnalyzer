@@ -20,16 +20,16 @@ class projectAnalyser
     {
         // qq chemin
         $this->_dirRoot = __DIR__.'/../../';
-        $this->_reportPath = $this->_dirRoot.'reports';
+        $this->_reportPath = $this->_dirRoot.'generated/reports';
 
         // les parameters
-        $this->_parameters = Spyc::YAMLLoad($this->_dirRoot.'assets/param.yml');
+        $this->_parameters = Spyc::YAMLLoad($this->_dirRoot.'core/param.yml');
 
         // les libelles de l'appli
         $availableLang = array('en', 'fr');
         $lang = $this->getParam('lang');
         $lang = in_array($lang, $availableLang) ? $lang : 'en';
-        $this->_labels = Spyc::YAMLLoad('assets/translations/'.$lang.'.yml');
+        $this->_labels = Spyc::YAMLLoad($this->_dirRoot.'translations/'.$lang.'.yml');
 
         // l'objet analyse
         $this->oAnalyze = new analyze();
@@ -64,7 +64,7 @@ class projectAnalyser
      */
     public function isAnalyzeInProgress()
     {
-        return file_exists($this->_dirRoot.'jetons/jetonAnalyse');
+        return file_exists($this->_dirRoot.'generated/jetons/jetonAnalyse');
     }
 
     function extractFromLoc($param)
@@ -241,13 +241,13 @@ class projectAnalyser
 
         $testReportFile = $this->_reportPath.'/TEST/report.txt';
         if (file_exists($testReportFile)) {
-            
+
             $res['report'] = $this->adaptPhpUnitReport($testReportFile);
-            
+
             $res['date'] = $this->getDateGeneration($testReportFile);
 
             $lines = file($testReportFile);
-            
+
             if ($this->_parameters['test']['lib'] == 'phpunit') {
                 foreach ($lines as $l) {
 
@@ -280,8 +280,8 @@ class projectAnalyser
                             list($_,  $res['nbAssertions']) = explode(':', $a);
                         }
                     }
-                }                
-                
+                }
+
                 $covReportFile = $this->_reportPath.'/TEST/coverage.txt';
                 if (file_exists($covReportFile)) {
                     $res['dateTimeCC']=$this->getReadableDateTime(filemtime($covReportFile));
@@ -299,11 +299,11 @@ class projectAnalyser
                     }
                 }
             } // phpunit
-            
+
             if ($this->_parameters['test']['lib'] == 'atoum') {
                 $nbLines = count($lines);
                 list($_, $res['exeTime']) = explode(':', $lines[$nbLines-2]);
-                
+
                 //Success (4 tests, 40/40 methods, 0 void method, 0 skipped method, 265 assertions)!
                 $line = $lines[$nbLines-1];
                 $res['ok'] = strpos($line, 'Success') !== false;
@@ -314,16 +314,16 @@ class projectAnalyser
                     $res['nbTest'] = str_ireplace('tests', '', $nb);
 
                     $res['nbAssertions'] = str_ireplace('assertions)!', '', array_pop($items));
-                    
+
                     foreach ($lines as $l) {
                         if (strpos($l, 'Code coverage value:') !== false) {
                             $res['ccLine'] = str_ireplace('> Code coverage value: ', '', $l);
                         }
                     }
-                    
+
                     $res['dateTimeCC']=$this->getReadableDateTime(filemtime($testReportFile));
                 } else {
-                    
+
                 }
             } // atoum
         }
@@ -333,7 +333,7 @@ class projectAnalyser
         if (file_exists($cmdFile)) {
             $res['cmd']=  file_get_contents($cmdFile);
         }
-        
+
         $cmdManuelleFile = $this->_reportPath.'/TEST/cmdManuelle.txt';
         if (file_exists($cmdManuelleFile)) {
             $res['cmdManuelle']=  file_get_contents($cmdManuelleFile);
@@ -372,14 +372,14 @@ class projectAnalyser
             if (file_exists($cmdFile)) {
                 $res[$report]['cmd']= file_get_contents($cmdFile);
             }
-            
+
             $cmdManuelleFile = $this->_reportPath.'/'.$report.'/cmdManuelle.txt';
             $res[$report]['cmdManuelle']='';
             if (file_exists($cmdManuelleFile)) {
                 $res[$report]['cmdManuelle']= file_get_contents($cmdManuelleFile);
             }
-            
-            if ($report == 'CS') {                
+
+            if ($report == 'CS') {
                 $cmdRepFile = $this->_reportPath.'/'.$report.'/cmdRep.txt';
                 $res[$report]['cmdRep']='';
                 if (file_exists($cmdRepFile)) {
@@ -396,7 +396,7 @@ class projectAnalyser
      */
     function getAnalyseInfo()
     {
-        $file = $this->_dirRoot.'jetons/timeAnalyse';
+        $file = $this->_dirRoot.'generated/jetons/timeAnalyse';
         if (file_exists($file)) {
             $this->oAnalyze
                 ->setDateTime(filemtime($file))

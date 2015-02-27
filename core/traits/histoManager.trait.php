@@ -12,7 +12,7 @@ trait histoManager
     public function getAnalyses()
     {
         $res = array();
-        $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
+        $fileName = $this->_dirRoot.'generated/reports/HISTORIQUE/'.date('ym').'.json';
         $string = file_get_contents($fileName);
         $tab = json_decode($string, true);
 
@@ -30,7 +30,7 @@ trait histoManager
      */
     public function historise()
     {
-        $fileName = $this->_dirRoot.'reports/HISTORIQUE/'.date('ym').'.json';
+        $fileName = $this->_dirRoot.'generated/reports/HISTORIQUE/'.date('ym').'.json';
         if (file_exists($fileName)) {
             $string = file_get_contents($fileName);
             $tab = json_decode($string, true);
