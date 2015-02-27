@@ -9,7 +9,7 @@ srcPath : /home/jd/html/Redis/src
 
 # métrique quantitative
 count : true
-
+ 
 # métrique qualité copy-paste
 cpd : true
 

@@ -1,12 +1,18 @@
 <?php
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-require_once __DIR__."/assets/php/Spyc.php";
-require_once __DIR__.'/assets/php/scriptBuilder.trait.php';
-require_once __DIR__.'/assets/php/paramManager.trait.php';
-require_once __DIR__.'/assets/php/scriptManager.class.php';
+foreach (glob('core/lib/*') as $filePath) {
+    require_once $filePath;
+}
+
+foreach (glob('core/traits/*') as $filePath) {
+    require_once $filePath;
+}
+
+foreach (glob('core/classes/*') as $filePath) {
+    require_once $filePath;
+}
 
 // on lance l'analyse
 $sm = new scriptManager();

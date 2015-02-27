@@ -1,1 +1,0 @@
-php /var/www/html/PhpProjectAnalyzer/assets/php/../..//assets/_phar/phploc.phar /home/jd/html/Redis/src

@@ -20,7 +20,7 @@ class scriptManager
 
     function __construct()
     {
-        $this->_dirRoot             = __DIR__.'/../../../';
+        $this->_dirRoot             = __DIR__.'/../../';
         $this->_paramPath           = $this->_dirRoot.'core/param.yml';
         $this->_jetonAnalysePath    = $this->_dirRoot.'generated/jetons/jetonAnalyse';
         $this->_paShPath            = $this->_dirRoot.'generated/sh/pa.sh';

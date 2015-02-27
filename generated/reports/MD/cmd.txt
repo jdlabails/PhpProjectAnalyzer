@@ -1,1 +1,0 @@
-/var/www/html/PhpProjectAnalyzer/assets/php/../..//assets/_phar/phpmd.phar /home/jd/html/Redis/src text codesize,controversial,design,naming,unusedcode --reportfile /var/www/html/PhpProjectAnalyzer/assets/php/../..//reports/MD/report.txt

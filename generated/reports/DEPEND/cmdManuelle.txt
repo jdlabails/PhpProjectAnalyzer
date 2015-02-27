@@ -1,1 +1,0 @@
-php /var/www/html/PhpProjectAnalyzer/assets/php/../..//assets/_phar/pdepend.phar /home/jd/html/Redis/src
