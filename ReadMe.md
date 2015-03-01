@@ -22,7 +22,7 @@ And give a view like :
 ### Easy for Symfony2  - Made for that !
  - Go to your web directory
  - Launch git clone https://github.com/jdlabails/PhpProjectAnalyzer.git
- - As root, launch web/PhpProjectAnalyzer/assets/sh/install.sh
+ - Run sudo web/PhpProjectAnalyzer/core/install.sh
  - Move assets/param.dist.yml to assets/param.yml
  - Edit assets/param.yml to fit your project
  - Call yoursymfonyproject/PhpProjectAnalyzer/index.php with your nav.
@@ -35,10 +35,6 @@ And give a view like :
  - English or French interfaces
  - Links with code coverage report
  - Scoring based on quantity and quality metrics
+ - Enable PhpUnit or Atoum unit tests
+ - Give a score to your project with parametrable weight
 
-
-### Road Map
-
- - DataBase following of the project
- - Atoum support
- - Remote version to analyse several projects
