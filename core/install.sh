@@ -17,6 +17,7 @@ DIR_PHP=${DIR_GEN}/php
 DIR_REPORT=${DIR_GEN}/reports
 DIR_JETON=${DIR_GEN}/jetons
 DIR_SH=${DIR_GEN}/sh
+DIR_PHP=${DIR_GEN}/php
 
 WEB_USER=www-data:www-data
 read -p "Please enter your web server user [www-data:www-data] : " INPUT
@@ -26,7 +27,7 @@ then
 fi
 
 
-function createDossier4Web {
+function createDir4Web {
     if [ ! -d $1 ]
     then
         echo 'Dir creation of  '$1
@@ -39,27 +40,25 @@ function createDossier4Web {
 }
 
 # on cree les rep de report
-createDossier4Web ${DIR_GEN}
-createDossier4Web ${DIR_REPORT}
-createDossier4Web ${DIR_REPORT}/COUNT
-createDossier4Web ${DIR_REPORT}/CPD
-createDossier4Web ${DIR_REPORT}/CS
-createDossier4Web ${DIR_REPORT}/LOC
-createDossier4Web ${DIR_REPORT}/DEPEND
-createDossier4Web ${DIR_REPORT}/DOCS
-createDossier4Web ${DIR_REPORT}/MD
-createDossier4Web ${DIR_REPORT}/TEST
-createDossier4Web ${DIR_REPORT}/HISTORIQUE
+createDir4Web ${DIR_GEN}
+createDir4Web ${DIR_PHP}
+createDir4Web ${DIR_SH}
+createDir4Web ${DIR_REPORT}
+createDir4Web ${DIR_REPORT}/COUNT
+createDir4Web ${DIR_REPORT}/CPD
+createDir4Web ${DIR_REPORT}/CS
+createDir4Web ${DIR_REPORT}/LOC
+createDir4Web ${DIR_REPORT}/DEPEND
+createDir4Web ${DIR_REPORT}/DOCS
+createDir4Web ${DIR_REPORT}/MD
+createDir4Web ${DIR_REPORT}/TEST
+createDir4Web ${DIR_REPORT}/HISTORIQUE
 
-createDossier4Web ${DIR_SH}/one
+createDir4Web ${DIR_SH}/one
 
-createDossier4Web ${DIR_JETON}
+createDir4Web ${DIR_JETON}
 
 echo 'Change owner & rights of file '${DIR_SH}/pa.sh
 touch ${DIR_SH}/pa.sh
 chown ${WEB_USER} ${DIR_SH}/pa.sh
 chmod 755 ${DIR_SH}/pa.sh
-
-
-chown ${WEB_USER} ${DIR_PHP}/atoum.cc.php
-chmod 755 ${DIR_PHP}/atoum.cc.php
