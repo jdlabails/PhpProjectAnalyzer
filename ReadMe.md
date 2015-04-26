@@ -22,9 +22,9 @@ And give a view like :
 ### Easy for Symfony2  - Made for that !
  - Go to your web directory
  - Launch git clone https://github.com/jdlabails/PhpProjectAnalyzer.git
- - Run sudo web/PhpProjectAnalyzer/core/install.sh
- - Move assets/param.dist.yml to assets/param.yml
- - Edit assets/param.yml to fit your project
+ - Run sudo PhpProjectAnalyzer/core/install.sh
+ - Run cp core/param.dist.yml core/param.yml
+ - Edit core/param.yml to fit your project
  - Call yoursymfonyproject/PhpProjectAnalyzer/index.php with your nav.
  - Click on 'Start Scan'
 
