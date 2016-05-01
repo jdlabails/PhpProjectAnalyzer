@@ -1,5 +1,18 @@
 
-<?php require_once "core/inc.php"; ?>
+<?php
+
+require_once "core/inc.php";
+
+$projectAnalyser    = new JD\PhpProjectAnalyzer\Classes\ProjectAnalyzer($parameters, $labels);
+$_quality_info      = $projectAnalyser->getQualityInfo();
+$_testInfo          = $projectAnalyser->exploitTestReport();
+$_reportInfo        = $projectAnalyser->getReportInfo();
+
+$a = new JD\PhpProjectAnalyzer\Classes\Analyze();
+$a = $projectAnalyser->getAnalyze();
+$_note = $a->getScore();
+
+?>
 
 <!DOCTYPE html>
 <html>

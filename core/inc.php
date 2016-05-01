@@ -2,34 +2,44 @@
 
 ini_set('display_errors', 1);
 
-foreach (glob('core/lib/*') as $filePath) {
-    require_once $filePath;
-}
+spl_autoload_register(function ($class) {
+//die($class);
+    // project-specific namespace prefix
+    $prefix = 'JD\\PhpProjectAnalyzer\\';
 
-foreach (glob('core/traits/*') as $filePath) {
-    require_once $filePath;
-}
+    // base directory for the namespace prefix
+    $core_dir = __DIR__ . '/';
 
-foreach (glob('core/classes/*') as $filePath) {
-    require_once $filePath;
-}
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
 
-/*
-require_once "assets/php/visualizer.trait.php";
-require_once "assets/php/scoreManager.trait.php";
-require_once "assets/php/histoManager.trait.php";
-require_once "assets/php/paramManager.trait.php";
+    // get the relative class name
+    $relative_class = substr($class, $len);
 
-require_once "assets/php/projectAnalyser.class.php";
-require_once "assets/php/analyze.class.php";
-require_once "assets/php/Spyc.php";
-*/
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $core_dir . str_replace('\\', '/', $relative_class) . '.php';
 
-$projectAnalyser    = new projectAnalyser();
-$_quality_info      = $projectAnalyser->getQualityInfo();
-$_testInfo          = $projectAnalyser->exploitTestReport();
-$_reportInfo        = $projectAnalyser->getReportInfo();
-$_note              = $projectAnalyser->getNote($_testInfo);
+    // if the file exists, require it
+    if (file_exists($file)) {
+        //die($file);
+        require $file;
+    }
+});
 
-$a = new analyze();
-$a = $projectAnalyser->getAnalyze();
+// on charger les parametres
+require 'lib/Spyc.php';
+
+
+$parameters = spyc_load_file(__DIR__.'/param.yml');
+
+// les libelles de l'appli
+$availableLang = array('en', 'fr');
+$lang = $parameters['lang'];
+$lang = in_array($lang, $availableLang) ? $lang : 'en';
+$labels = spyc_load_file(__DIR__.'/../translations/'.$lang.'.yml');
